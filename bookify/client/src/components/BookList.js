@@ -60,6 +60,18 @@ class BookList extends Component {
     });
   };
 
+  saveBook = (event) => {
+    console.log(event.target.name);
+
+    // read: find me the object inside the userBooks state property which matches with the book title of the item i'm clicking on:
+    const bookObjectToBeAdded = this.state.userBooks.find((book) => {
+      return book.title === event.target.name;
+    });
+
+    console.log(bookObjectToBeAdded);
+    axios.post("/dashboard/savebook", bookObjectToBeAdded);
+  };
+
   render() {
     const allBooksList = BooksDummy.map((book) => {
       return (
@@ -87,6 +99,12 @@ class BookList extends Component {
             type="button"
             onClick={this.removeBook}
             value="Remove"
+            name={book.title}
+          />
+          <input
+            type="button"
+            onClick={this.saveBook}
+            value="Add"
             name={book.title}
           />
         </div>
