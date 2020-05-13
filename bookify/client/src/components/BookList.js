@@ -4,9 +4,11 @@ import "../components/BookList.css";
 import axios from "axios";
 
 class BookList extends Component {
+  // STATE scenario:
   state = {
     isbnInput: "",
     userBooks: [],
+    userBooksFromDb: [],
   };
 
   inputChange = (event) => {
@@ -72,7 +74,29 @@ class BookList extends Component {
     axios.post("/dashboard/savebook", bookObjectToBeAdded);
   };
 
+  // DATABASE scenario:
+  componentDidMount() {
+    this.getBooksFromDb();
+  }
+
+  getBooksFromDb = () => {
+    axios
+      .get("/dashboard/getbooks")
+      .then((allBooksFromDb) => {
+        const allBooksData = allBooksFromDb.data;
+        console.log("success getting books from database: ", allBooksData);
+
+        this.setState({
+          userBooksFromDb: allBooksData,
+        });
+      })
+      .catch((error) => {
+        console.log("error getting books from database in frontend: ", error);
+      });
+  };
+
   render() {
+    // all 3 can be refactored as a single component, which gets different props passed depending on source (JSON, state, database)
     const allBooksList = BooksDummy.map((book) => {
       return (
         <div key={book.id} className="bookInList">
@@ -88,7 +112,10 @@ class BookList extends Component {
     const userBooksList = this.state.userBooks.map((book) => {
       return (
         <div key="" className="bookInList">
-          <img src={book.cover.medium} alt="" />
+          <img
+            src={book.cover.medium} // error when no cover available
+            alt=""
+          />
           <p>Title: {book.title}</p>
           <p>Authored: {book["by_statement"]}</p>
           <p>Published: {book["publish_date"]}</p>
@@ -111,10 +138,32 @@ class BookList extends Component {
       );
     });
 
+    const userBooksFromDb = this.state.userBooksFromDb.map((book) => {
+      return (
+        <div key={book.title} className="bookInDbList">
+          <p>from database:</p>
+          <img src={book.cover.medium} alt="" />
+          <p>Title: {book.title}</p>
+          <p>Authored: {book["by_statement"]}</p>
+          <p>Published: {book["publish_date"]}</p>
+          <a href={book.url}>Details</a>
+          <br />
+          <br />
+          <input
+            type="button"
+            onClick={this.removeBookFromDb}
+            value="Remove"
+            name={book.title}
+          />
+        </div>
+      );
+    });
+
     return (
       <div className="content">
         <div className="booksList">{allBooksList}</div>
         <div className="userBooksList">{userBooksList}</div>
+        <div className="userBooksFromDbList">{userBooksFromDb}</div>
         <div className="showBookByISBN">
           <form>
             <input type="text" name="isbn" onChange={this.inputChange} />
