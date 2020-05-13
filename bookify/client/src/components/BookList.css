@@ -1,8 +1,9 @@
 .content {
-  height: 50vh;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
 }
 
 .bookList {
@@ -12,6 +13,16 @@
   flex-wrap: wrap;
 }
 
+.bookInList {
+  margin: 30px;
+}
+
 .bookInList img {
   width: 100px;
+  margin: 10px;
+}
+
+.comment {
+  margin: 20px;
+  width: 50%;
 }
