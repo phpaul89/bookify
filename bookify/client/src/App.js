@@ -1,27 +1,38 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
 import "./App.css";
+import Navbar from "./components/Navbar";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <div className="helloWorld">Hello World!</div>
-    </div>
-  );
+class App extends Component {
+  state = {
+    user: this.props.user,
+  };
+
+  setUser = (user) => {
+    this.setState({
+      user: user,
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <Navbar user={this.state.user} setUser={this.setUser} />
+        <Route
+          exact
+          path="/signup"
+          render={(props) => <Signup setUser={this.setUser} {...props} />}
+        />
+        <Route
+          exact
+          path="/login"
+          render={(props) => <Login setUser={this.setUser} {...props} />}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
