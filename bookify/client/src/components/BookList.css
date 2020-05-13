@@ -1,0 +1,29 @@
+.content {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.booksList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.bookInList {
+  margin: 30px;
+  background-color: whitesmoke;
+}
+
+.bookInList img {
+  width: 100px;
+  margin: 10px;
+}
+
+.comment {
+  margin: 20px;
+  width: 50%;
+}
