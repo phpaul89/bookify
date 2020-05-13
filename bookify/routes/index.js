@@ -14,18 +14,31 @@ router.post("/dashboard/savebook", (request, response) => {
   console.log(request.body);
   const { title, cover, by_statement, publish_date, url } = request.body;
 
-  Book.create({
-    title: title,
-    by: by_statement,
-    year: publish_date,
-    cover: cover,
-    url: url,
-  })
-    .then((response) => {
-      console.log("successfully created book: ", response);
+  Book.findOne({ title: title })
+    .then((bookExists) => {
+      if (bookExists) {
+        console.log("This book already exists");
+        return;
+      } else {
+        Book.create({
+          title: title,
+          by: by_statement,
+          year: publish_date,
+          cover: cover,
+          url: url,
+        })
+          .then((bookCreated) => {
+            console.log("successfully created book: ", bookCreated);
+          })
+          .catch((error) => {
+            console.log(error);
+            next();
+          });
+      }
     })
     .catch((error) => {
-      console.log(error);
+      console.log("Error finding book: ", error);
+      next();
     });
 });
 
