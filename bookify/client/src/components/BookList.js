@@ -6,6 +6,7 @@ import axios from "axios";
 class BookList extends Component {
   state = {
     isbnInput: "",
+    userBooks: [],
   };
 
   inputOnChange = (event) => {
@@ -13,7 +14,7 @@ class BookList extends Component {
     this.setState({ isbnInput: event.target.value });
   };
 
-  isbnClick = () => {
+  inputClick = () => {
     console.log("ISBN from input: ", this.state.isbnInput);
     const isbn = this.state.isbnInput;
 
@@ -25,6 +26,20 @@ class BookList extends Component {
         console.log(bookJSON.data[`ISBN:${isbn}`]);
         console.log(bookJSON.data[`ISBN:${isbn}`].title);
         console.log(bookJSON.data[`ISBN:${isbn}`]["publish_date"]);
+        console.log("Current userBooks property: ", this.state.userBooks);
+        this.setState({
+          // correct way to push into state property array instead of '.push' using spread operator
+          userBooks: [
+            ...this.state.userBooks,
+            {
+              title: bookJSON.data[`ISBN:${isbn}`].title,
+              cover: bookJSON.data[`ISBN:${isbn}`].cover,
+              by_statement: bookJSON.data[`ISBN:${isbn}`]["by_statement"],
+              publish_date: bookJSON.data[`ISBN:${isbn}`]["publish_date"],
+            },
+          ],
+        });
+        console.log("New userBooks property: ", this.state.userBooks);
       })
       .catch((error) => {
         console.log("Error calling axios: ", error);
@@ -32,7 +47,7 @@ class BookList extends Component {
   };
 
   render() {
-    const allBooks = BooksDummy.map((book) => {
+    const allBooksList = BooksDummy.map((book) => {
       return (
         <div key={book.id} className="bookInList">
           <img src={book.imageUrl} alt={book.id} />
@@ -43,13 +58,26 @@ class BookList extends Component {
       );
     });
 
+    // state.userBooks gets resetted after page reload -> connection to database for permanent storage needed
+    const userBooksList = this.state.userBooks.map((book) => {
+      return (
+        <div key="" className="bookInList">
+          <img src={book.cover.medium} alt="" />
+          <p>Title: {book.title}</p>
+          <p>Authored: {book["by_statement"]}</p>
+          <p>Published: {book["publish_date"]}</p>
+        </div>
+      );
+    });
+
     return (
       <div className="content">
-        <div className="bookList">{allBooks}</div>
+        <div className="booksList">{allBooksList}</div>
+        <div className="userBooksList">{userBooksList}</div>
         <div className="showBookByISBN">
           <form>
             <input type="text" name="isbn" onChange={this.inputOnChange} />
-            <input type="button" onClick={this.isbnClick} value="Get book" />
+            <input type="button" onClick={this.inputClick} value="Get book" />
           </form>
         </div>
         <div className="comment">
