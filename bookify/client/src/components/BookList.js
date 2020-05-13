@@ -9,7 +9,7 @@ class BookList extends Component {
     userBooks: [],
   };
 
-  inputOnChange = (event) => {
+  inputChange = (event) => {
     console.log(event.target.value);
     this.setState({ isbnInput: event.target.value });
   };
@@ -29,7 +29,7 @@ class BookList extends Component {
         console.log(bookJSON.data[`ISBN:${isbn}`]["publish_date"]);
         console.log("Current userBooks property: ", this.state.userBooks);
         this.setState({
-          // correct way to push into state property array instead of '.push' using spread operator
+          // correct way to push into state property array: instead of '.push' using spread operator
           userBooks: [
             ...this.state.userBooks,
             {
@@ -37,6 +37,7 @@ class BookList extends Component {
               cover: bookJSON.data[`ISBN:${isbn}`].cover,
               by_statement: bookJSON.data[`ISBN:${isbn}`]["by_statement"],
               publish_date: bookJSON.data[`ISBN:${isbn}`]["publish_date"],
+              url: bookJSON.data[`ISBN:${isbn}`].url,
             },
           ],
         });
@@ -79,6 +80,9 @@ class BookList extends Component {
           <p>Title: {book.title}</p>
           <p>Authored: {book["by_statement"]}</p>
           <p>Published: {book["publish_date"]}</p>
+          <a href={book.url}>Details</a>
+          <br />
+          <br />
           <input
             type="button"
             onClick={this.removeBook}
@@ -95,7 +99,7 @@ class BookList extends Component {
         <div className="userBooksList">{userBooksList}</div>
         <div className="showBookByISBN">
           <form>
-            <input type="text" name="isbn" onChange={this.inputOnChange} />
+            <input type="text" name="isbn" onChange={this.inputChange} />
             <input type="button" onClick={this.inputClick} value="Get book" />
           </form>
         </div>
