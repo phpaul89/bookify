@@ -18,6 +18,7 @@ class BookList extends Component {
     console.log("ISBN from input: ", this.state.isbnInput);
     const isbn = this.state.isbnInput;
 
+    // ADD book to state:
     axios
       .get(
         `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
@@ -46,6 +47,18 @@ class BookList extends Component {
       });
   };
 
+  removeBook = (event) => {
+    console.log(event.target.value); // "Remove"
+    console.log(event.target.name); // = book title
+
+    // it's best practice not to mutate state array directly -> create a new array by '.filter' and assign to state property
+    this.setState({
+      userBooks: this.state.userBooks.filter((book) => {
+        return book.title !== event.target.name;
+      }),
+    });
+  };
+
   render() {
     const allBooksList = BooksDummy.map((book) => {
       return (
@@ -66,6 +79,12 @@ class BookList extends Component {
           <p>Title: {book.title}</p>
           <p>Authored: {book["by_statement"]}</p>
           <p>Published: {book["publish_date"]}</p>
+          <input
+            type="button"
+            onClick={this.removeBook}
+            value="Remove"
+            name={book.title}
+          />
         </div>
       );
     });
