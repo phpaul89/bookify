@@ -42,4 +42,15 @@ router.post("/dashboard/savebook", (request, response) => {
     });
 });
 
+router.get("/dashboard/getbooks", (request, response) => {
+  Book.find()
+    .then((allBooksFromDb) => {
+      response.send(allBooksFromDb);
+    })
+    .catch((error) => {
+      console.log("error getting books from database in backend: ", error);
+      next();
+    });
+});
+
 module.exports = router;
