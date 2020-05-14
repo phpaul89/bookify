@@ -30,7 +30,8 @@ class Signup extends Component {
       } else {
         // user gets logged in
         this.props.setUser(data);
-        this.props.history.push("/profile");
+        //this.props.history.push("/profile");
+        this.props.history.push("/");
       }
     });
   };

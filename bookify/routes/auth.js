@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
+const User = require("../models/User.js");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 
@@ -70,7 +70,7 @@ router.delete("/logout", (req, res) => {
 });
 
 router.get("/loggedin", (req, res) => {
-  console.log(req.user);
+  console.log("This user logged in: ", req.user);
   res.json(req.user);
 });
 

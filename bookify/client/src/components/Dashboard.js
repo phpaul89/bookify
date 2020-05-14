@@ -9,13 +9,6 @@ class Dashboard extends Component {
   };
 
   updateSearchResults = (bookJSON, isbn) => {
-    // comment block
-    console.log(bookJSON.data[`ISBN:${isbn}`]);
-    console.log(bookJSON.data[`ISBN:${isbn}`].title);
-    console.log(bookJSON.data[`ISBN:${isbn}`]["publish_date"]);
-    console.log("Current userBooks property: ", this.state.userBooks);
-    // end comment block
-
     this.setState({
       // correct way to push into state property array: instead of '.push' using spread operator
       searchResults: [
@@ -29,7 +22,6 @@ class Dashboard extends Component {
         },
       ],
     });
-    console.log("New userBooks property: ", this.state.searchResults);
   };
 
   render() {

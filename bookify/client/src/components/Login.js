@@ -31,7 +31,8 @@ class Login extends Component {
         });
       } else {
         this.props.setUser(data);
-        this.props.history.push("/profile");
+        //this.props.history.push("/profile");
+        this.props.history.push("/");
       }
     });
   };
