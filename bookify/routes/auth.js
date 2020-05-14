@@ -53,6 +53,9 @@ router.post("/login", (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "Wrong credentials" });
     }
+    // if (!password) {
+    //   return res.status(401).json({ message: "Wrong password" });
+    // }
     req.login(user, (err) => {
       if (err) {
         return res
