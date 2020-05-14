@@ -5,7 +5,6 @@ class LoggedIn extends Component {
   render() {
     return (
       <div className="app">
-        <div className="navbar-dummy">Navbar</div>
         <div className="main-wrapper">
           <div className="left-sidebar">
             <div className="left-section">User data</div>
