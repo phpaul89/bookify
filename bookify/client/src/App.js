@@ -1,9 +1,13 @@
+
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
+
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import BookList from "./components/BookList.js";
+
 
 class App extends Component {
   state = {
@@ -30,9 +34,11 @@ class App extends Component {
           path="/login"
           render={(props) => <Login setUser={this.setUser} {...props} />}
         />
+        <BookList />
       </div>
     );
   }
+
 }
 
 export default App;

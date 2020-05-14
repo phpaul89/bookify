@@ -1,0 +1,44 @@
+[
+  {
+    "id": "123",
+    "title": "Book A",
+    "author": "John Doe",
+    "year": 2000,
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/61/Book-icon-orange.png"
+  },
+  {
+    "id": "234",
+    "title": "Book B",
+    "author": "Jane Doe",
+    "year": 1980,
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/61/Book-icon-orange.png"
+  },
+  {
+    "id": "345",
+    "title": "Book C",
+    "author": "Jason Bourne",
+    "year": 2005,
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/61/Book-icon-orange.png"
+  },
+  {
+    "id": "456",
+    "title": "Book D",
+    "author": "Max Power",
+    "year": 1999,
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/61/Book-icon-orange.png"
+  },
+  {
+    "id": "567",
+    "title": "Book E",
+    "author": "Joan Doe",
+    "year": 2001,
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/61/Book-icon-orange.png"
+  },
+  {
+    "id": "678",
+    "title": "Book F",
+    "author": "Jack Doe",
+    "year": 2010,
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/61/Book-icon-orange.png"
+  }
+]
