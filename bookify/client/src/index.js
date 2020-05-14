@@ -9,7 +9,6 @@ import axios from "axios";
 // passing the logged user as a prop
 axios.get("/api/auth/loggedin").then((response) => {
   const user = response.data;
-  console.log("user, ", user);
   ReactDOM.render(
     <BrowserRouter>
       <App user={user} />

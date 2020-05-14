@@ -17,6 +17,7 @@ class Login extends Component {
   };
 
   handleSubmit = (event) => {
+    console.log("aaaaa");
     event.preventDefault();
 
     const { username, password } = this.state;
@@ -50,8 +51,6 @@ class Login extends Component {
               id="username"
             />
           </div>
-        </form>
-        <form>
           <div>
             <label htmlFor="password">Password: </label>
             <input
