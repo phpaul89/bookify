@@ -183,6 +183,7 @@ router.post("/dashboard/saveToList", (request, response, next) => {
 
 router.get("/dashboard/getUserList", (request, response, next) => {
   List.find({ owner: request.user._id })
+    .populate("books")
     .then((allListsOfUser) => {
       response.send(allListsOfUser);
     })
