@@ -30,6 +30,11 @@ class UserList extends Component {
       return (
         <div key="" className="list">
           <p>{list.name}</p>
+          <ul>
+            {list.books.map((book) => {
+              return <li key="">{book}</li>;
+            })}
+          </ul>
         </div>
       );
     });

@@ -64,10 +64,13 @@ router.post("/dashboard/saveToList", (request, response, next) => {
   const { title, cover, by_statement, publish_date, url } = request.body.book;
   const listName = request.body.list;
 
+  console.log("Title in backend: ", title);
+  console.log("List in backend: ", listName);
+
   // Step 1 of 2: Check by book title if Book is already existing in database, if not -> create Book:
   Book.findOne({ title: title })
     .then((bookExists) => {
-      if (bookExists) {
+      if (bookExists != null) {
         console.log("Book exists already, checking for List now");
         return;
       } else {
@@ -93,25 +96,42 @@ router.post("/dashboard/saveToList", (request, response, next) => {
     });
 
   // Step 2 of 2: Check by list name if List is already existing in database, if not -> create List and push Book to books property:
-  List.findOne({ name: listName })
-    .then((exists) => {
-      if (exists != null) {
+  List.findOne({ name: listName, owner: request.user._id })
+    .then((listExists) => {
+      if (listExists != null) {
+        console.log("List found");
+
         Book.findOne({ title: title })
           .then((bookExists) => {
-            if (bookExists) {
-              console.log("Book exists already in this List");
-              return;
-            } else {
-              List.update({ name: listName }, { $push: { books: bookExists } })
-                .then((listUpdated) => {
-                  console.log("List got updated: ", listUpdated);
+            console.log("returned value for book: ", bookExists);
+            List.findOne({
+              name: listName,
+              owner: request.user._id,
+              books: bookExists,
+            })
+              .then((listOfUserWithBookExists) => {
+                if (listOfUserWithBookExists != null) {
+                  console.log("Book exists already in this List");
                   return;
-                })
-                .catch((error) => {
-                  console.log("Error updating List: ", error);
-                  next();
-                });
-            }
+                } else {
+                  List.update(
+                    { name: listName, owner: request.user._id },
+                    { $push: { books: bookExists } }
+                  )
+                    .then((listUpdated) => {
+                      console.log("List got updated: ", listUpdated);
+                      return;
+                    })
+                    .catch((error) => {
+                      console.log("Error updating List: ", error);
+                      next();
+                    });
+                }
+              })
+              .catch((error) => {
+                console.log("Error finding book in user list: ", error);
+                next();
+              });
           })
           .catch((error) => {
             console.log("Error finding Book: ", error);
@@ -127,23 +147,18 @@ router.post("/dashboard/saveToList", (request, response, next) => {
             console.log("New list created: ", newList);
             Book.findOne({ title: title })
               .then((bookExists) => {
-                if (bookExists) {
-                  console.log("Book exists already in this List");
-                  return;
-                } else {
-                  List.update(
-                    { name: listName },
-                    { $push: { books: bookExists } }
-                  )
-                    .then((listUpdated) => {
-                      console.log("List got updated: ", listUpdated);
-                      return;
-                    })
-                    .catch((error) => {
-                      console.log("Error updating List: ", error);
-                      next();
-                    });
-                }
+                List.update(
+                  { name: listName, owner: request.user._id },
+                  { $push: { books: bookExists } }
+                )
+                  .then((listUpdated) => {
+                    console.log("List got updated: ", listUpdated);
+                    return;
+                  })
+                  .catch((error) => {
+                    console.log("Error updating List: ", error);
+                    next();
+                  });
               })
               .catch((error) => {
                 console.log("Error finding Book: ", error);
