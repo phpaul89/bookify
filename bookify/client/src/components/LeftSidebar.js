@@ -7,7 +7,7 @@ class LeftSidebar extends Component {
       <div className="left-sidebar">
         <div className="left-section">User data</div>
         <div className="left-section">
-          <UserList />
+          <UserList lists={this.props.lists} />
         </div>
       </div>
     );

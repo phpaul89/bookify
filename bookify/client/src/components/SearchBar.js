@@ -19,7 +19,7 @@ class SearchBar extends Component {
         `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
       )
       .then((bookJSON) => {
-        this.props.searchResults(bookJSON, isbn);
+        this.props.updateSearchResults(bookJSON, isbn);
       })
       .catch((error) => {
         console.log("Error calling axios at inputClick: ", error);

@@ -175,6 +175,9 @@ router.post("/dashboard/saveToList", (request, response, next) => {
       console.log("Error finding List: ", error);
       next();
     });
+
+  // testing purposes:
+  response.send(true);
 });
 
 router.get("/dashboard/getUserList", (request, response, next) => {
