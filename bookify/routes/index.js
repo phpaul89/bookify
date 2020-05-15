@@ -10,38 +10,38 @@ const List = require("../models/List-model.js");
 // });
 
 // custom routes, will be split into route files later:
-router.post("/dashboard/savebook", (request, response) => {
-  console.log("success on backend");
-  console.log(request.body);
-  const { title, cover, by_statement, publish_date, url } = request.body;
+// router.post("/dashboard/savebook", (request, response) => {
+//   console.log("success on backend");
+//   console.log(request.body);
+//   const { title, cover, by_statement, publish_date, url } = request.body;
 
-  Book.findOne({ title: title })
-    .then((bookExists) => {
-      if (bookExists) {
-        console.log("This book already exists");
-        return;
-      } else {
-        Book.create({
-          title: title,
-          by: by_statement,
-          year: publish_date,
-          cover: cover,
-          url: url,
-        })
-          .then((bookCreated) => {
-            console.log("successfully created book: ", bookCreated);
-          })
-          .catch((error) => {
-            console.log(error);
-            next();
-          });
-      }
-    })
-    .catch((error) => {
-      console.log("Error finding book: ", error);
-      next();
-    });
-});
+//   Book.findOne({ title: title })
+//     .then((bookExists) => {
+//       if (bookExists) {
+//         console.log("This book already exists");
+//         return;
+//       } else {
+//         Book.create({
+//           title: title,
+//           by: by_statement,
+//           year: publish_date,
+//           cover: cover,
+//           url: url,
+//         })
+//           .then((bookCreated) => {
+//             console.log("successfully created book: ", bookCreated);
+//           })
+//           .catch((error) => {
+//             console.log(error);
+//             next();
+//           });
+//       }
+//     })
+//     .catch((error) => {
+//       console.log("Error finding book: ", error);
+//       next();
+//     });
+// });
 
 router.get("/dashboard/getbooks", (request, response) => {
   Book.find()
@@ -158,6 +158,17 @@ router.post("/dashboard/saveToList", (request, response, next) => {
     })
     .catch((error) => {
       console.log("Error finding List: ", error);
+      next();
+    });
+});
+
+router.get("/dashboard/getUserList", (request, response, next) => {
+  List.find({ owner: request.user._id })
+    .then((allListsOfUser) => {
+      response.send(allListsOfUser);
+    })
+    .catch((error) => {
+      console.log("Error getting all lists of user: ", error);
       next();
     });
 });

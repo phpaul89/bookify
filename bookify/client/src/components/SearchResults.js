@@ -21,14 +21,8 @@ class SearchResults extends Component {
           <br />
           <input
             type="button"
-            onClick={this.removeBook}
-            value="Remove"
-            name={book.title}
-          />
-          <input
-            type="button"
             onClick={this.onClickSave}
-            value="Add"
+            value="Add to List"
             name={book.title}
           />
         </div>
