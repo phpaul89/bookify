@@ -114,12 +114,14 @@ router.post("/dashboard/saveToList", (request, response, next) => {
                   console.log("Book exists already in this List");
                   return;
                 } else {
-                  List.update(
+                  List.updateOne(
                     { name: listName, owner: request.user._id },
                     { $push: { books: bookExists } }
                   )
                     .then((listUpdated) => {
                       console.log("List got updated: ", listUpdated);
+                      // response needed to execute '.then()' in frontend:
+                      response.send("done");
                       return;
                     })
                     .catch((error) => {
@@ -147,12 +149,14 @@ router.post("/dashboard/saveToList", (request, response, next) => {
             console.log("New list created: ", newList);
             Book.findOne({ title: title })
               .then((bookExists) => {
-                List.update(
+                List.updateOne(
                   { name: listName, owner: request.user._id },
                   { $push: { books: bookExists } }
                 )
                   .then((listUpdated) => {
                     console.log("List got updated: ", listUpdated);
+                    // response needed to execute '.then()' in frontend:
+                    response.send("done");
                     return;
                   })
                   .catch((error) => {
@@ -175,9 +179,6 @@ router.post("/dashboard/saveToList", (request, response, next) => {
       console.log("Error finding List: ", error);
       next();
     });
-
-  // testing purposes:
-  response.send(true);
 });
 
 router.get("/dashboard/getUserList", (request, response, next) => {

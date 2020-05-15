@@ -57,8 +57,8 @@ class LoggedIn extends Component {
     // maybe remove from state after saving to list with '.then'
     axios
       .post("/dashboard/saveToList", { book: bookToList, list: "Default" })
-      .then((updateList) => {
-        console.log("updating list: ", updateList);
+      .then((flag) => {
+        console.log("updating list: ", flag);
         this.getListsFromDb();
       });
   };
