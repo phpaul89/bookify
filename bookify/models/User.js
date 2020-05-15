@@ -5,6 +5,7 @@ const userSchema = new Schema(
   {
     username: String,
     password: String,
+    lists: [{ type: Schema.Types.ObjectID, ref: "List" }],
   },
   {
     timestamps: true,
