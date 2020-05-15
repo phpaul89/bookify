@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 
 class SearchResults extends Component {
+  onClickSave = (event) => {
+    this.props.onSaveToList(event.target.name);
+  };
+
   render() {
     const searchResultsList = this.props.searchResults.map((book) => {
       return (
@@ -23,7 +27,7 @@ class SearchResults extends Component {
           />
           <input
             type="button"
-            onClick={this.saveBook}
+            onClick={this.onClickSave}
             value="Add"
             name={book.title}
           />

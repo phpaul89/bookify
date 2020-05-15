@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../components/Dashboard.css";
 import SearchBar from "../components/SearchBar.js";
 import SearchResults from "../components/SearchResults.js";
+import axios from "axios";
 
 class Dashboard extends Component {
   state = {
@@ -24,6 +25,19 @@ class Dashboard extends Component {
     });
   };
 
+  saveToList = (bookTitle) => {
+    console.log("from dashboard");
+    console.log(bookTitle);
+
+    const bookToList = this.state.searchResults.find((book) => {
+      return book.title === bookTitle;
+    });
+
+    console.log(bookToList);
+
+    axios.post("/dashboard/saveToList", { book: bookToList, list: "Default" }); // maybe remove from state after saving to list with '.then'
+  };
+
   render() {
     return (
       <div className="dashboard">
@@ -31,7 +45,10 @@ class Dashboard extends Component {
           <SearchBar searchResults={this.updateSearchResults} />
         </div>
         <div className="dashboard-result">
-          <SearchResults searchResults={this.state.searchResults} />
+          <SearchResults
+            searchResults={this.state.searchResults}
+            onSaveToList={this.saveToList}
+          />
         </div>
       </div>
     );
