@@ -10,7 +10,10 @@ const logger = require("morgan");
 const path = require("path");
 
 mongoose
-  .connect("mongodb://localhost/bookify", { useNewUrlParser: true })
+  .connect("mongodb://localhost/bookify", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then((x) => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
@@ -69,9 +72,13 @@ app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 // default value for title local
 app.locals.title = "Express - Generated with IronGenerator";
 
+app.use("/", require("./routes/index"));
 app.use("/api/auth", require("./routes/auth"));
 
+<<<<<<< HEAD
 const index = require("./routes/index");
 app.use("/", index);
 
+=======
+>>>>>>> ee047c9e62212d8ca3d01a15cff2385026fd5b60
 module.exports = app;
