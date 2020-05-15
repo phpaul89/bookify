@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Book = require("../models/Book-model.js");
+const List = require("../models/List-model.js");
 
 /* GET home page */
 // router.get("/", (req, res, next) => {
@@ -9,15 +10,68 @@ const Book = require("../models/Book-model.js");
 // });
 
 // custom routes, will be split into route files later:
-router.post("/dashboard/savebook", (request, response) => {
-  console.log("success on backend");
-  console.log(request.body);
-  const { title, cover, by_statement, publish_date, url } = request.body;
+// router.post("/dashboard/savebook", (request, response) => {
+//   console.log("success on backend");
+//   console.log(request.body);
+//   const { title, cover, by_statement, publish_date, url } = request.body;
 
+//   Book.findOne({ title: title })
+//     .then((bookExists) => {
+//       if (bookExists) {
+//         console.log("This book already exists");
+//         return;
+//       } else {
+//         Book.create({
+//           title: title,
+//           by: by_statement,
+//           year: publish_date,
+//           cover: cover,
+//           url: url,
+//         })
+//           .then((bookCreated) => {
+//             console.log("successfully created book: ", bookCreated);
+//           })
+//           .catch((error) => {
+//             console.log(error);
+//             next();
+//           });
+//       }
+//     })
+//     .catch((error) => {
+//       console.log("Error finding book: ", error);
+//       next();
+//     });
+// });
+
+router.get("/dashboard/getbooks", (request, response) => {
+  Book.find()
+    .then((allBooksFromDb) => {
+      response.send(allBooksFromDb);
+    })
+    .catch((error) => {
+      console.log("error getting books from database in backend: ", error);
+      next();
+    });
+});
+
+router.delete("/dashboard/deletebooks/:title", (request, response) => {
+  // console.log("parameter", request.params);
+  Book.findOneAndDelete(request.params.title);
+});
+
+router.post("/dashboard/saveToList", (request, response, next) => {
+  // destructuring: if variables is not passed by API -> initialized with 'undefined'
+  const { title, cover, by_statement, publish_date, url } = request.body.book;
+  const listName = request.body.list;
+
+  console.log("Title in backend: ", title);
+  console.log("List in backend: ", listName);
+
+  // Step 1 of 2: Check by book title if Book is already existing in database, if not -> create Book:
   Book.findOne({ title: title })
     .then((bookExists) => {
-      if (bookExists) {
-        console.log("This book already exists");
+      if (bookExists != null) {
+        console.log("Book exists already, checking for List now");
         return;
       } else {
         Book.create({
@@ -40,25 +94,101 @@ router.post("/dashboard/savebook", (request, response) => {
       console.log("Error finding book: ", error);
       next();
     });
-});
 
-router.get("/dashboard/getbooks", (request, response) => {
-  Book.find()
-    .then((allBooksFromDb) => {
-      response.send(allBooksFromDb);
+  // Step 2 of 2: Check by list name if List is already existing in database, if not -> create List and push Book to books property:
+  List.findOne({ name: listName, owner: request.user._id })
+    .then((listExists) => {
+      if (listExists != null) {
+        console.log("List found");
+
+        Book.findOne({ title: title })
+          .then((bookExists) => {
+            console.log("returned value for book: ", bookExists);
+            List.findOne({
+              name: listName,
+              owner: request.user._id,
+              books: bookExists,
+            })
+              .then((listOfUserWithBookExists) => {
+                if (listOfUserWithBookExists != null) {
+                  console.log("Book exists already in this List");
+                  return;
+                } else {
+                  List.update(
+                    { name: listName, owner: request.user._id },
+                    { $push: { books: bookExists } }
+                  )
+                    .then((listUpdated) => {
+                      console.log("List got updated: ", listUpdated);
+                      return;
+                    })
+                    .catch((error) => {
+                      console.log("Error updating List: ", error);
+                      next();
+                    });
+                }
+              })
+              .catch((error) => {
+                console.log("Error finding book in user list: ", error);
+                next();
+              });
+          })
+          .catch((error) => {
+            console.log("Error finding Book: ", error);
+            next();
+          });
+      } else {
+        List.create({
+          name: listName,
+          owner: request.user._id,
+          books: [],
+        })
+          .then((newList) => {
+            console.log("New list created: ", newList);
+            Book.findOne({ title: title })
+              .then((bookExists) => {
+                List.update(
+                  { name: listName, owner: request.user._id },
+                  { $push: { books: bookExists } }
+                )
+                  .then((listUpdated) => {
+                    console.log("List got updated: ", listUpdated);
+                    return;
+                  })
+                  .catch((error) => {
+                    console.log("Error updating List: ", error);
+                    next();
+                  });
+              })
+              .catch((error) => {
+                console.log("Error finding Book: ", error);
+                next();
+              });
+          })
+          .catch((error) => {
+            console.log("Error creating List: ", error);
+            next();
+          });
+      }
     })
     .catch((error) => {
-      console.log("error getting books from database in backend: ", error);
+      console.log("Error finding List: ", error);
+      next();
+    });
+
+  // testing purposes:
+  response.send(true);
+});
+
+router.get("/dashboard/getUserList", (request, response, next) => {
+  List.find({ owner: request.user._id })
+    .then((allListsOfUser) => {
+      response.send(allListsOfUser);
+    })
+    .catch((error) => {
+      console.log("Error getting all lists of user: ", error);
       next();
     });
 });
 
-<<<<<<< HEAD
-router.delete("/dashboard/deletebooks/:title", (request, response, next) => {
-  // console.log("parameter", request.params);
-  Book.findOneAndDelete(request.params.title);
-});
-
-=======
->>>>>>> ee047c9e62212d8ca3d01a15cff2385026fd5b60
 module.exports = router;
