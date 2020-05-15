@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 
@@ -6,8 +5,8 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-import BookList from "./components/BookList.js";
 
+import LoggedIn from "./components/LoggedIn.js";
 
 class App extends Component {
   state = {
@@ -19,26 +18,36 @@ class App extends Component {
       user: user,
     });
   };
-
   render() {
     return (
-      <div>
-        <Navbar user={this.state.user} setUser={this.setUser} />
+      <div className="app">
+        <div className="navbar-dummy">
+          <Navbar user={this.state.user} setUser={this.setUser} />
+          <Route
+            exact
+            path="/signup"
+            render={(props) => <Signup setUser={this.setUser} {...props} />}
+          />
+          <Route
+            exact
+            path="/login"
+            render={(props) => <Login setUser={this.setUser} {...props} />}
+          />
+        </div>
         <Route
           exact
-          path="/signup"
-          render={(props) => <Signup setUser={this.setUser} {...props} />}
+          path="/"
+          render={(props) => {
+            return this.state.user !== null ? (
+              <LoggedIn />
+            ) : (
+              <div>Please login</div>
+            );
+          }}
         />
-        <Route
-          exact
-          path="/login"
-          render={(props) => <Login setUser={this.setUser} {...props} />}
-        />
-        <BookList />
       </div>
     );
   }
-
 }
 
 export default App;
