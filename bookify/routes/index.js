@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const Book = require("../models/Book-model.js");
 
 /* GET home page */
-router.get("/", (req, res, next) => {
-  res.render("index");
-});
+// router.get("/", (req, res, next) => {
+//   res.render("index");
+// });
 
 // custom routes, will be split into route files later:
 router.post("/dashboard/savebook", (request, response) => {
@@ -53,4 +53,12 @@ router.get("/dashboard/getbooks", (request, response) => {
     });
 });
 
+<<<<<<< HEAD
+router.delete("/dashboard/deletebooks/:title", (request, response, next) => {
+  // console.log("parameter", request.params);
+  Book.findOneAndDelete(request.params.title);
+});
+
+=======
+>>>>>>> ee047c9e62212d8ca3d01a15cff2385026fd5b60
 module.exports = router;

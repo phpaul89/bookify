@@ -50,11 +50,23 @@ class BookList extends Component {
       });
   };
 
-  removeBook = (event) => {
-    console.log(event.target.value); // "Remove"
-    console.log(event.target.name); // = book title
+  // removeBook = (event) => {
+  //   console.log(event.target.value); // "Remove"
+  //   console.log(event.target.name); // = book title
 
-    // it's best practice not to mutate state array directly -> create a new array by '.filter' and assign to state property
+  //   // it's best practice not to mutate state array directly -> create a new array by '.filter' and assign to state property
+  //   this.setState({
+  //     userBooks: this.state.userBooks.filter((book) => {
+  //       return book.title !== event.target.name;
+  //     }),
+  //   });
+  // };
+
+  // delete book from database
+  deleteBook = (event) => {
+    // console.log("Target:", event.target);
+    axios.delete(`/dashboard/deletebooks/${event.target.name}`);
+
     this.setState({
       userBooks: this.state.userBooks.filter((book) => {
         return book.title !== event.target.name;
@@ -153,6 +165,12 @@ class BookList extends Component {
             type="button"
             onClick={this.removeBookFromDb}
             value="Remove"
+            name={book.title}
+          />
+          <input
+            type="button"
+            onClick={this.deleteBook}
+            value="Delete"
             name={book.title}
           />
         </div>
