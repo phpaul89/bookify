@@ -3,6 +3,7 @@ import LeftSidebar from "../components/LeftSidebar.js";
 import Dashboard from "../components/Dashboard.js";
 import RightSidebar from "../components/RightSidebar.js";
 import axios from "axios";
+import "../components/LoggedIn.css";
 
 class LoggedIn extends Component {
   state = {
@@ -56,7 +57,7 @@ class LoggedIn extends Component {
 
     // maybe remove from state after saving to list with '.then'
     axios
-      .post("/dashboard/saveToList", { book: bookToList, list: "Default" })
+      .post("/dashboard/saveToList", { book: bookToList, list: "Classic" })
       .then((flag) => {
         console.log("updating list: ", flag);
         this.getListsFromDb();
