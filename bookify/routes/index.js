@@ -53,12 +53,9 @@ router.get("/dashboard/getbooks", (request, response) => {
     });
 });
 
-<<<<<<< HEAD
 router.delete("/dashboard/deletebooks/:title", (request, response, next) => {
   // console.log("parameter", request.params);
   Book.findOneAndDelete(request.params.title);
 });
 
-=======
->>>>>>> ee047c9e62212d8ca3d01a15cff2385026fd5b60
 module.exports = router;
