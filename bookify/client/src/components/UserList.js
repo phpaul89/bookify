@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import "../components/UserList.css";
 
 class UserList extends Component {
+  clickTest = (event) => {
+    this.props.onClickListItem(event.target.innerHTML);
+  };
+
   render() {
     const listsOfUser = this.props.lists.map((list) => {
       return (
@@ -10,7 +14,11 @@ class UserList extends Component {
             <p>{list.name}</p>
             <ul>
               {list.books.map((book) => {
-                return <li key={book.title}>{book.title}</li>;
+                return (
+                  <li key={book.title} onClick={this.clickTest}>
+                    {book.title}
+                  </li>
+                );
               })}
             </ul>
           </div>
