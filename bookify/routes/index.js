@@ -31,7 +31,14 @@ router.delete("/dashboard/deletebooks/:title", (request, response) => {
 
 router.post("/dashboard/saveToList", (request, response, next) => {
   // destructuring: if variables is not passed by API -> initialized with 'undefined'
-  const { title, cover, by_statement, publish_date, url } = request.body.book;
+  const {
+    isbn,
+    title,
+    cover,
+    by_statement,
+    publish_date,
+    url,
+  } = request.body.book;
   const listName = request.body.list;
 
   //console.log("Title in backend: ", title);
@@ -45,6 +52,7 @@ router.post("/dashboard/saveToList", (request, response, next) => {
         return;
       } else {
         Book.create({
+          isbn: isbn,
           title: title,
           by: by_statement,
           year: publish_date,
@@ -185,6 +193,7 @@ router.post("/shareBook", (request, response, next) => {
     .then((book) => {
       console.log("find book: ", book);
       SuggestedBook.create({
+        isbn: book.isbn,
         title: book.title,
         by: book.by,
         year: book.year,

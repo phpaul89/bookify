@@ -50,6 +50,7 @@ class LoggedIn extends Component {
       // correct way to push into state property array: instead of '.push' using spread operator
       searchResults: [
         {
+          isbn: isbn,
           title: bookJSON.data[`ISBN:${isbn}`].title,
           cover: bookJSON.data[`ISBN:${isbn}`].cover,
           by_statement: bookJSON.data[`ISBN:${isbn}`]["by_statement"],

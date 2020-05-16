@@ -18,8 +18,9 @@ class SearchResults extends Component {
             alt=""
           />
           <p>Title: {book.title}</p>
-          <p>Authored: {book["by_statement"]}</p>
-          <p>Published: {book["publish_date"]}</p>
+          <p>Authored: {book.by}</p>
+          <p>Published: {book.year}</p>
+          <p>ISBN: {book.isbn}</p>
           <a href={book.url}>Details</a>
           <br />
           <br />
