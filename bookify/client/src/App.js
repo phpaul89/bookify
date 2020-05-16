@@ -21,19 +21,18 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <div className="navbar-dummy">
-          <Navbar user={this.state.user} setUser={this.setUser} />
-          <Route
-            exact
-            path="/signup"
-            render={(props) => <Signup setUser={this.setUser} {...props} />}
-          />
-          <Route
-            exact
-            path="/login"
-            render={(props) => <Login setUser={this.setUser} {...props} />}
-          />
-        </div>
+        <Navbar user={this.state.user} setUser={this.setUser} />
+        <Route
+          exact
+          path="/signup"
+          render={(props) => <Signup setUser={this.setUser} {...props} />}
+        />
+        <Route
+          exact
+          path="/login"
+          render={(props) => <Login setUser={this.setUser} {...props} />}
+        />
+
         <Route
           exact
           path="/"
