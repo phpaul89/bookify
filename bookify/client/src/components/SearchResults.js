@@ -5,6 +5,10 @@ class SearchResults extends Component {
     this.props.onSaveToList(event.target.name);
   };
 
+  onClickShare = (event) => {
+    this.props.onClickShareBook(event.target.name);
+  };
+
   render() {
     const searchResultsList = this.props.searchResults.map((book) => {
       return (
@@ -23,6 +27,12 @@ class SearchResults extends Component {
             type="button"
             onClick={this.onClickSave}
             value="Add to List"
+            name={book.title}
+          />
+          <input
+            type="button"
+            onClick={this.onClickShare}
+            value="Share"
             name={book.title}
           />
         </div>

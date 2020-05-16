@@ -8,7 +8,10 @@ class LeftSidebar extends Component {
       <div className="left-sidebar">
         <div className="left-section-user-panel">User data</div>
         <div className="left-section-list">
-          <UserList lists={this.props.lists} />
+          <UserList
+            lists={this.props.lists}
+            onClickListItem={this.props.onClickListItem}
+          />
         </div>
       </div>
     );

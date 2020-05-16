@@ -22,6 +22,11 @@
   list-style-position: inside;
 }
 
+.list ul li p {
+  margin: 0;
+  padding: 0;
+}
+
 .breakLine {
   width: 100%;
 }

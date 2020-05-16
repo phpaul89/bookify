@@ -14,6 +14,7 @@ class Dashboard extends Component {
           <SearchResults
             searchResults={this.props.searchResults}
             onSaveToList={this.props.onSaveToList}
+            onClickShareBook={this.props.onClickShareBook}
           />
         </div>
       </div>
