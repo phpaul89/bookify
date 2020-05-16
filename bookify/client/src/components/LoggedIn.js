@@ -50,6 +50,7 @@ class LoggedIn extends Component {
       // correct way to push into state property array: instead of '.push' using spread operator
       searchResults: [
         {
+          isbn: isbn,
           title: bookJSON.data[`ISBN:${isbn}`].title,
           cover: bookJSON.data[`ISBN:${isbn}`].cover,
           by_statement: bookJSON.data[`ISBN:${isbn}`]["by_statement"],
@@ -72,7 +73,7 @@ class LoggedIn extends Component {
 
     // maybe remove from state after saving to list with '.then'
     axios
-      .post("/dashboard/saveToList", { book: bookToList, list: "Classic" })
+      .post("/dashboard/saveToList", { book: bookToList, list: "Default" })
       .then((flag) => {
         //console.log("updating list: ", flag);
         this.getListsFromDb();

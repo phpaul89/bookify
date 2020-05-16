@@ -1,4 +1,9 @@
+.list-container {
+  width: 100%;
+}
+
 .list-group {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,25 +11,67 @@
 }
 
 .list {
-  width: 90%;
+  width: 100%;
   font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .list p {
-  margin: 10% 0 0 0;
+  text-align: center;
+  width: 40%;
   padding: 0;
+  margin: 10% 0 10% 0;
+}
+
+.list p:hover {
+  color: #93bdec;
+  font-weight: bold;
 }
 
 .list ul {
+  width: 100%;
   margin: 0;
   padding: 0;
-  list-style: square;
-  list-style-position: inside;
+  list-style: none;
+}
+
+.list li {
+  padding: 0 14px 0 26px;
+  margin: 6px 0 6px 0;
+}
+
+.list li:hover {
+  background-color: rgb(243, 244, 246);
+  border-left: 3px solid lightgray;
+  padding-left: 23px;
+}
+
+.list li:active {
+  border-left: 3px solid #93bdec;
+  padding-left: 24px;
 }
 
 .list ul li p {
   margin: 0;
   padding: 0;
+}
+
+.separator-wrapper {
+  width: 100%;
+  height: 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-item-separator {
+  background-color: whitesmoke;
+  height: 1px;
+  width: 80%;
 }
 
 .breakLine {
