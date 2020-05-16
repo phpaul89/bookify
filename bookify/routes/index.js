@@ -221,6 +221,7 @@ router.post("/shareBook", (request, response, next) => {
 });
 
 router.get("/getSuggestedBooksList", (request, response, next) => {
+  console.log("backend: /getSuggestedBooksList");
   User.findOne({ _id: request.user._id })
     .populate("suggestedBooks")
     .then((user) => {
