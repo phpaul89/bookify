@@ -14,7 +14,7 @@
   width: 90%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -22,11 +22,19 @@
   background-color: #93bcec8c;
 }
 
+.arrowListName:hover > .list-edit,
+.list-edit:hover {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+}
+
 .arrow {
   border: solid black;
   border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 3px;
+  margin-left: 5px;
 }
 
 .right {
@@ -41,7 +49,7 @@
 
 .list {
   width: 100%;
-  font-size: 0.8em;
+  font-size: 1em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,9 +59,18 @@
 
 .list p {
   text-align: center;
-  width: 40%;
+  width: 74%;
   padding: 0;
   margin: 5% 0 5% 0;
+}
+
+.list-edit {
+  width: 16px;
+  height: 16px;
+  display: none;
+  opacity: 0.5;
+  margin: 0;
+  padding: 0;
 }
 
 .list ul {
@@ -77,6 +94,23 @@
 .list li:active {
   border-left: 3px solid #93bdec;
   padding-left: 24px;
+}
+
+.book-group {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.deleteButtonBook {
+  display: none;
+}
+
+.list li:hover + .deleteButtonBook,
+.deleteButtonBook:hover {
+  display: inline-block;
+  color: black;
 }
 
 .list ul li p {

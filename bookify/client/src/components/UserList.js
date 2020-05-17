@@ -59,6 +59,13 @@ class UserList extends Component {
               <p key={list.name} onClick={this.clickList} name={list.name}>
                 {list.name}
               </p>
+              {this.state.activeLists.includes(list.name) ? (
+                <img
+                  src="/images/edit-list.png"
+                  className="list-edit"
+                  alt="icon-list-edit"
+                />
+              ) : null}
             </div>
             {this.state.activeLists.includes(list.name) ? (
               <ul>
