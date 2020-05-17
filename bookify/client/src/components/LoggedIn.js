@@ -61,19 +61,22 @@ class LoggedIn extends Component {
     });
   };
 
-  onSaveToList = (bookTitle) => {
+  onSaveToList = (listName, bookTitle) => {
     //console.log("from LoggedIn component");
-    //console.log(bookTitle);
+    console.log("frontend: book title: ", bookTitle);
+    console.log("frontend: list name: ", listName);
+
+    console.log(this.state.searchResults);
 
     const bookToList = this.state.searchResults.find((book) => {
       return book.title === bookTitle;
     });
 
-    //console.log(bookToList);
+    console.log("frontend: book to save: ", bookToList);
 
     // maybe remove from state after saving to list with '.then'
     axios
-      .post("/dashboard/saveToList", { book: bookToList, list: "Default" })
+      .post("/dashboard/saveToList", { book: bookToList, list: listName })
       .then((flag) => {
         //console.log("updating list: ", flag);
         this.getListsFromDb();
@@ -143,6 +146,7 @@ class LoggedIn extends Component {
             updateSearchResults={this.updateSearchResults}
             onSaveToList={this.onSaveToList}
             onClickShareBook={this.onShareBook}
+            lists={this.state.lists}
           />
           <RightSidebar suggestedList={this.state.suggestedList} />
         </div>
