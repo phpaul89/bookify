@@ -1,8 +1,20 @@
 import React, { Component } from "react";
 
 class SearchResults extends Component {
+  state = {
+    activeAdd: false,
+    bookToAdd: "",
+  };
+  onClickAdd = (event) => {
+    this.setState({
+      activeAdd: !this.state.activeAdd,
+      bookToAdd: event.target.name,
+    });
+  };
+
   onClickSave = (event) => {
-    this.props.onSaveToList(event.target.name);
+    console.log(event.target.innerHTML, this.state.bookToAdd);
+    this.props.onSaveToList(event.target.innerHTML, this.state.bookToAdd);
   };
 
   onClickShare = (event) => {
@@ -26,7 +38,7 @@ class SearchResults extends Component {
           <br />
           <input
             type="button"
-            onClick={this.onClickSave}
+            onClick={this.onClickAdd}
             value="Add to List"
             name={book.title}
           />
@@ -40,7 +52,22 @@ class SearchResults extends Component {
       );
     });
 
-    return <div className="allBooksFromSearchResults">{searchResultsList}</div>;
+    const userLists = this.props.lists.map((list) => {
+      return (
+        <p key="list.name" onClick={this.onClickSave}>
+          {list.name}
+        </p>
+      );
+    });
+
+    return (
+      <div className="allBooksFromSearchResults">
+        {searchResultsList}
+        {this.state.activeAdd === true ? (
+          <div className="chooseListToAddTo">{userLists}</div>
+        ) : null}
+      </div>
+    );
   }
 }
 

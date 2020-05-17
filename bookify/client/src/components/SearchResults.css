@@ -1,0 +1,4 @@
+.allBooksFromSearchResults {
+  display: flex;
+  flex-direction: column;
+}

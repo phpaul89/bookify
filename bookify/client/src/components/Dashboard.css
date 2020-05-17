@@ -16,7 +16,7 @@
 }
 
 .dashboard-result {
-  height: 50%;
+  min-height: 30%;
   background-color: white;
   border: 1px solid lightgray;
   border-radius: 0.2em;
