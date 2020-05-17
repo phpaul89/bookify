@@ -33,9 +33,16 @@ class UserList extends Component {
       return (
         <div key={list.name} className="list-group">
           <div className="list">
-            <p key={list.name} onClick={this.clickList}>
-              {list.name}
-            </p>
+            <div className="arrowListName">
+              {this.state.activeLists.includes(list.name) ? (
+                <i className="arrow down"></i>
+              ) : (
+                <i className="arrow right"></i>
+              )}
+              <p key={list.name} onClick={this.clickList}>
+                {list.name}
+              </p>
+            </div>
             {this.state.activeLists.includes(list.name) ? (
               <ul>
                 {list.books.map((book) => {
