@@ -13,17 +13,22 @@ class UserList extends Component {
   // list should toggle between hiding/showing list books
   // add/remove toggled lists to state 'activeLists' for conditional rendering
   clickList = (event) => {
-    // console.log("Clicked on list: ", event.target.innerHTML);
-    const checkActive = this.state.activeLists.includes(event.target.innerHTML);
+    // .getAttribute("name") here instead of .name!
+    const checkActive = this.state.activeLists.includes(
+      event.target.getAttribute("name")
+    );
 
     if (checkActive === true) {
       const newActiveLists = this.state.activeLists.filter(
-        (list) => list !== event.target.innerHTML
+        (list) => list !== event.target.getAttribute("name")
       );
       this.setState({ activeLists: newActiveLists });
     } else {
       this.setState({
-        activeLists: [...this.state.activeLists, event.target.innerHTML],
+        activeLists: [
+          ...this.state.activeLists,
+          event.target.getAttribute("name"),
+        ],
       });
     }
   };
@@ -33,13 +38,25 @@ class UserList extends Component {
       return (
         <div key={list.name} className="list-group">
           <div className="list">
-            <div className="arrowListName">
+            <div
+              className="arrowListName"
+              onClick={this.clickList}
+              name={list.name}
+            >
               {this.state.activeLists.includes(list.name) ? (
-                <i className="arrow down"></i>
+                <i
+                  className="arrow down"
+                  onClick={this.clickList}
+                  name={list.name}
+                ></i>
               ) : (
-                <i className="arrow right"></i>
+                <i
+                  className="arrow right"
+                  onClick={this.clickList}
+                  name={list.name}
+                ></i>
               )}
-              <p key={list.name} onClick={this.clickList}>
+              <p key={list.name} onClick={this.clickList} name={list.name}>
                 {list.name}
               </p>
             </div>
