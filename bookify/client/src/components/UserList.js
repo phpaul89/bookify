@@ -61,6 +61,15 @@ class UserList extends Component {
     }
   };
 
+  onClickDelFromList = (event) => {
+    console.log(event.target.getAttribute("book"));
+    console.log(event.target.getAttribute("list"));
+    this.props.onDeleteBookFromList(
+      event.target.getAttribute("book"),
+      event.target.getAttribute("list")
+    );
+  };
+
   render() {
     const listsOfUser = this.props.lists.map((list) => {
       return (
@@ -110,7 +119,14 @@ class UserList extends Component {
                           {book.title}
                         </li>
                         {this.state.activeEditLists.includes(list.name) ? (
-                          <i className="deleteBookFromList">DEL</i>
+                          <i
+                            className="deleteBookFromList"
+                            onClick={this.onClickDelFromList}
+                            book={book.title}
+                            list={list.name}
+                          >
+                            DEL
+                          </i>
                         ) : null}
                       </div>
                       <div className="separator-wrapper">
