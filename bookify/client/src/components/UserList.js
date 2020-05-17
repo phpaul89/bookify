@@ -4,6 +4,7 @@ import "../components/UserList.css";
 class UserList extends Component {
   state = {
     activeLists: [],
+    activeEditLists: [],
   };
 
   clickListItem = (event) => {
@@ -18,7 +19,14 @@ class UserList extends Component {
       event.target.getAttribute("name")
     );
 
-    if (checkActive === true) {
+    const checkEditActive = this.state.activeEditLists.includes(
+      event.target.getAttribute("name")
+    );
+
+    // only trigger drop-down close if edit-mode is deactivated
+    // without 'checkEditActive' -> edge case: drop-down would close if user clicked in this order: 1. EDIT, 2. LIST, 3. EDIT
+    // whereas drop-down would not close on 2. but activeLists gets updated anyway
+    if (checkActive === true && checkEditActive === false) {
       const newActiveLists = this.state.activeLists.filter(
         (list) => list !== event.target.getAttribute("name")
       );
@@ -27,6 +35,26 @@ class UserList extends Component {
       this.setState({
         activeLists: [
           ...this.state.activeLists,
+          event.target.getAttribute("name"),
+        ],
+      });
+    }
+  };
+
+  clickEditList = (event) => {
+    const checkActive = this.state.activeEditLists.includes(
+      event.target.getAttribute("name")
+    );
+
+    if (checkActive === true) {
+      const newActiveLists = this.state.activeEditLists.filter(
+        (list) => list !== event.target.getAttribute("name")
+      );
+      this.setState({ activeEditLists: newActiveLists });
+    } else {
+      this.setState({
+        activeEditLists: [
+          ...this.state.activeEditLists,
           event.target.getAttribute("name"),
         ],
       });
@@ -43,7 +71,8 @@ class UserList extends Component {
               onClick={this.clickList}
               name={list.name}
             >
-              {this.state.activeLists.includes(list.name) ? (
+              {this.state.activeLists.includes(list.name) ||
+              this.state.activeEditLists.includes(list.name) ? (
                 <i
                   className="arrow down"
                   onClick={this.clickList}
@@ -59,22 +88,31 @@ class UserList extends Component {
               <p key={list.name} onClick={this.clickList} name={list.name}>
                 {list.name}
               </p>
-              {this.state.activeLists.includes(list.name) ? (
+              {this.state.activeLists.includes(list.name) ||
+              this.state.activeEditLists.includes(list.name) ? (
                 <img
                   src="/images/edit-list.png"
                   className="list-edit"
                   alt="icon-list-edit"
+                  onClick={this.clickEditList}
+                  name={list.name}
                 />
               ) : null}
             </div>
-            {this.state.activeLists.includes(list.name) ? (
+            {this.state.activeLists.includes(list.name) ||
+            this.state.activeEditLists.includes(list.name) ? (
               <ul>
                 {list.books.map((book) => {
                   return (
                     <div key={book.isbn}>
-                      <li key={book.isbn} onClick={this.clickListItem}>
-                        {book.title}
-                      </li>
+                      <div className="book-group">
+                        <li key={book.isbn} onClick={this.clickListItem}>
+                          {book.title}
+                        </li>
+                        {this.state.activeEditLists.includes(list.name) ? (
+                          <i className="deleteBookFromList">DEL</i>
+                        ) : null}
+                      </div>
                       <div className="separator-wrapper">
                         <div className="list-item-separator"></div>
                       </div>

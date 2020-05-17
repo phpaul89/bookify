@@ -37,7 +37,7 @@ class LoggedIn extends Component {
       .get("/getSuggestedBooksList")
       .then((response) => {
         let listDataOfSuggestedBooks = response.data;
-        console.log(listDataOfSuggestedBooks);
+        //console.log(listDataOfSuggestedBooks);
         this.setState({ suggestedList: listDataOfSuggestedBooks });
       })
       .catch((error) => {

@@ -81,6 +81,7 @@
 }
 
 .list li {
+  width: 80%;
   padding: 0 14px 0 26px;
   margin: 6px 0 6px 0;
 }
@@ -100,17 +101,14 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 }
 
-.deleteButtonBook {
-  display: none;
-}
-
-.list li:hover + .deleteButtonBook,
-.deleteButtonBook:hover {
-  display: inline-block;
-  color: black;
+.deleteBookFromList {
+  font-style: normal;
+  margin: 0;
+  padding: 0 10px 0 10px;
 }
 
 .list ul li p {
