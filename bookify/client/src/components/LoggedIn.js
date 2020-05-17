@@ -117,6 +117,18 @@ class LoggedIn extends Component {
       });
   };
 
+  onDeleteBookFromList = (bookTitle, listName) => {
+    axios
+      .post("/deleteBookFromList", { book: bookTitle, list: listName })
+      .then((response) => {
+        console.log("frontend: removed book from list");
+        this.getListsFromDb();
+      })
+      .catch((error) => {
+        console.log("Error at deleting book: ", error);
+      });
+  };
+
   render() {
     return (
       <div className="app">
@@ -124,6 +136,7 @@ class LoggedIn extends Component {
           <LeftSidebar
             lists={this.state.lists}
             onClickListItem={this.onClickListItem}
+            onDeleteBookFromList={this.onDeleteBookFromList}
           />
           <Dashboard
             searchResults={this.state.searchResults}

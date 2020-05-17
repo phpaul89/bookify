@@ -171,6 +171,33 @@ router.get("/dashboard/getUserList", (request, response, next) => {
     });
 });
 
+router.post("/deleteBookFromList", (request, response, next) => {
+  const { book, list } = request.body;
+  //console.log("in backend: ", book, list);
+
+  Book.findOne({ title: book })
+    .then((bookObject) => {
+      //console.log("found book: ", bookObject);
+      //console.log("id of found book: ", bookObject._id);
+      List.updateOne(
+        { owner: request.user._id, name: list },
+        { $pull: { books: bookObject._id } }
+      )
+        .then((list) => {
+          //console.log("Book removed from List: ", list);
+          response.send("done");
+        })
+        .catch((error) => {
+          console.log("Error removing book from list: ", error);
+          next();
+        });
+    })
+    .catch((error) => {
+      console.log("Error finding book: ", error);
+      next();
+    });
+});
+
 router.post("/getBook", (request, response, next) => {
   //console.log("in backend now");
   //console.log(request.body.title);
