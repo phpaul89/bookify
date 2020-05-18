@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../components/SearchResults.css";
 
 class SearchResults extends Component {
   state = {
@@ -25,29 +26,35 @@ class SearchResults extends Component {
     const searchResultsList = this.props.searchResults.map((book) => {
       return (
         <div key="" className="bookInSearchResultsList">
-          <img
-            src={book.cover.medium} // error when no cover available
-            alt=""
-          />
-          <p>Title: {book.title}</p>
-          <p>Authored: {book.by}</p>
-          <p>Published: {book.year}</p>
-          <p>ISBN: {book.isbn}</p>
-          <a href={book.url}>Details</a>
-          <br />
-          <br />
-          <input
-            type="button"
-            onClick={this.onClickAdd}
-            value="Add to List"
-            name={book.title}
-          />
-          <input
-            type="button"
-            onClick={this.onClickShare}
-            value="Share"
-            name={book.title}
-          />
+          <div className="imageBookSearchResult">
+            <img
+              src={book.cover.medium} // error when no cover available
+              alt=""
+            />
+          </div>
+          <div className="contentBookSearchResult">
+            <div className="infoBookSearchResult">
+              <p>Title: {book.title}</p>
+              <p>Author: {book.by}</p>
+              <p>Published: {book.year}</p>
+              <p>ISBN: {book.isbn}</p>
+              <a href={book.url}>Details</a>
+            </div>
+            <div className="buttonsBookSearchResult">
+              <input
+                type="button"
+                onClick={this.onClickAdd}
+                value="Add to List"
+                name={book.title}
+              />
+              <input
+                type="button"
+                onClick={this.onClickShare}
+                value="Share"
+                name={book.title}
+              />
+            </div>
+          </div>
         </div>
       );
     });
@@ -60,8 +67,13 @@ class SearchResults extends Component {
       );
     });
 
-    return (
-      <div className="allBooksFromSearchResults">
+    return searchResultsList.length === 0 ? (
+      <div className="allBooksFromSearchResultsOne">
+        <p>Grab a book</p>
+        <img src="/images/pulse.gif" alt="pulse-ani" />
+      </div>
+    ) : (
+      <div className="allBooksFromSearchResultsTwo">
         {searchResultsList}
         {this.state.activeAdd === true ? (
           <div className="chooseListToAddTo">{userLists}</div>
