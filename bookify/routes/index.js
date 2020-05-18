@@ -172,7 +172,7 @@ router.get("/dashboard/getUserList", (request, response, next) => {
 });
 
 router.post("/addList", (request, response, next) => {
-  console.log(request.body.name);
+  //console.log(request.body.name);
   List.create({
     name: request.body.name,
     owner: request.user._id,
