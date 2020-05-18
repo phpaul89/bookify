@@ -117,18 +117,23 @@ class LoggedIn extends Component {
       });
   };
 
-  onShareBook = (bookTitle) => {
+  onShareBook = (comment, friend, bookTitle) => {
     //console.log("book to share: ", bookTitle);
     axios
       .post("/shareBook", {
         title: bookTitle,
-        friend: "Phillip",
-        comment: "A great book!",
+        friend: friend,
+        comment: comment,
       })
       .then((response) => {
-        console.log("sharing successful on frontend: ", response);
-        //const suggestedBookFromDb = response.data;
-        //this.setState({ suggestedList: suggestedBookFromDb });
+        console.log("response from backend: ", response.data);
+        if (response.data === "Success") {
+          console.log("Book shared successfully!");
+        } else if (response.data === "Failure") {
+          console.log("User not found");
+        } else {
+          console.log("Unexpected error sharing book");
+        }
       })
       .catch((error) => {
         console.log("Error at sharing book: ", error);
