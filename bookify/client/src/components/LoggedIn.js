@@ -33,13 +33,13 @@ class LoggedIn extends Component {
   };
 
   onAddList = (newList) => {
-    console.log("new list name: ", newList);
+    //console.log("new list name: ", newList);
 
     axios
       .post("/addList", { name: newList })
       .then((response) => {
         // response == "done" from backend
-        console.log("frontend: list added");
+        //console.log("frontend: list added");
         this.getListsFromDb();
       })
       .catch((error) => {
