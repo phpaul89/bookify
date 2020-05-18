@@ -259,14 +259,19 @@ router.post("/shareBook", (request, response, next) => {
       })
         .then((suggestedBook) => {
           console.log("creating suggested book: ", suggestedBook);
-          User.updateOne(
+          User.findOneAndUpdate(
             { username: request.body.friend },
             { $push: { suggestedBooks: suggestedBook } }
           )
             .populate("suggestedBooks")
             .then((updated) => {
-              console.log("Book successfully shared: ", updated);
-              response.send(updated);
+              if (updated != null) {
+                console.log("Book successfully shared: ", updated);
+                response.send("Success");
+              } else {
+                console.log("User not found!: ", updated);
+                response.send("Failure");
+              }
             })
             .catch((error) => {
               console.log("Error at updating user: ", error);
@@ -274,7 +279,7 @@ router.post("/shareBook", (request, response, next) => {
             });
         })
         .catch((error) => {
-          console.log("Error at creating suggestedBook: ", suggestedBook);
+          console.log("Error at creating suggestedBook: ", error);
           next();
         });
     })
