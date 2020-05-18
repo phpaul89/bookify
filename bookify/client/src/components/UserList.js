@@ -88,6 +88,15 @@ class UserList extends Component {
     this.setState({ addListQuery: "" });
   };
 
+  onClickDeleteList = (event) => {
+    console.log("Delete: ", event.target.getAttribute("name"));
+    this.props.onDeleteList(event.target.getAttribute("name"));
+    const newActiveLists = this.state.activeEditLists.filter(
+      (list) => list !== event.target.getAttribute("name")
+    );
+    this.setState({ activeEditLists: newActiveLists });
+  };
+
   render() {
     const listsOfUser = this.props.lists.map((list) => {
       return (
@@ -147,12 +156,24 @@ class UserList extends Component {
                           </i>
                         ) : null}
                       </div>
+
                       <div className="separator-wrapper">
                         <div className="list-item-separator"></div>
                       </div>
                     </div>
                   );
                 })}
+                {this.state.activeEditLists.includes(list.name) ? (
+                  <div className="deleteList">
+                    <i
+                      className="delButton"
+                      onClick={this.onClickDeleteList}
+                      name={list.name}
+                    >
+                      Delete List
+                    </i>
+                  </div>
+                ) : null}
               </ul>
             ) : null}
           </div>

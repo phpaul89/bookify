@@ -147,6 +147,19 @@ class LoggedIn extends Component {
       });
   };
 
+  onDeleteList = (delList) => {
+    axios
+      .post("/deleteList", { name: delList })
+      .then((response) => {
+        // response == "done" from backend
+        //console.log("frontend: list added");
+        this.getListsFromDb();
+      })
+      .catch((error) => {
+        console.log("Error adding list: ", error);
+      });
+  };
+
   render() {
     return (
       <div className="app">
@@ -156,6 +169,7 @@ class LoggedIn extends Component {
             onClickListItem={this.onClickListItem}
             onDeleteBookFromList={this.onDeleteBookFromList}
             onAddList={this.onAddList}
+            onDeleteList={this.onDeleteList}
           />
           <Dashboard
             searchResults={this.state.searchResults}
