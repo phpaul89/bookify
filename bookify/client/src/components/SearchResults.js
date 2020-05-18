@@ -54,7 +54,7 @@ class SearchResults extends Component {
 
     const userLists = this.props.lists.map((list) => {
       return (
-        <p key="list.name" onClick={this.onClickSave}>
+        <p key={list.name} onClick={this.onClickSave}>
           {list.name}
         </p>
       );
