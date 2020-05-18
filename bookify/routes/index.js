@@ -270,4 +270,19 @@ router.get("/getSuggestedBooksList", (request, response, next) => {
     });
 });
 
+router.post("/follow/:id", (req, res) => {
+  console.log("/follow: ", req.params.id);
+  User.findOne({ _id: req.params.id }).then((user) => {
+    User.findOne({ _id: req.user._id }).then((loggedInUser) => {
+      console.log("logged", loggedInUser);
+      loggedInUser.following.push(user._id);
+      loggedInUser.save().then((result) => {
+        console.log(result);
+        res.send(result);
+      });
+    });
+    console.log(user);
+  });
+});
+
 module.exports = router;
