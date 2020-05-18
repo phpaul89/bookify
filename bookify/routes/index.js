@@ -171,6 +171,22 @@ router.get("/dashboard/getUserList", (request, response, next) => {
     });
 });
 
+router.post("/addList", (request, response, next) => {
+  console.log(request.body.name);
+  List.create({
+    name: request.body.name,
+    owner: request.user._id,
+  })
+    .then((newList) => {
+      console.log("backend: new list created: ", newList);
+      response.send("done");
+    })
+    .catch((error) => {
+      console.log("Error at creating new list ", error);
+      next();
+    });
+});
+
 router.post("/deleteBookFromList", (request, response, next) => {
   const { book, list } = request.body;
   //console.log("in backend: ", book, list);

@@ -1,5 +1,12 @@
 .list-container {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lists-only {
+  width: 100%;
 }
 
 .list-group {
@@ -20,6 +27,7 @@
 
 .arrowListName:hover {
   background-color: #93bcec8c;
+  cursor: pointer;
 }
 
 .arrowListName:hover > .list-edit,
@@ -34,7 +42,7 @@
   border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 3px;
-  margin-left: 5px;
+  margin-left: 18px;
 }
 
 .right {
@@ -90,6 +98,7 @@
   background-color: rgb(243, 244, 246);
   border-left: 3px solid lightgray;
   padding-left: 23px;
+  cursor: pointer;
 }
 
 .list li:active {
@@ -131,11 +140,41 @@
   width: 80%;
 }
 
-.breakLine {
-  width: 100%;
+.lists-only form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.breakLine hr {
-  border: 0.5px solid lightgray;
-  margin: 10% 0 0 0;
+.search-only {
+  margin: 5% 0 10% 0;
+  width: 80%;
+  display: flex;
+  flex: row;
+  justify-content: flex-start;
+}
+
+.inputAddList {
+  width: 70%;
+  height: 28px;
+  background-color: white;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 0;
+  outline: 0;
+  margin: 0;
+  padding: 0 0 0 5%;
+}
+
+.btnSearch {
+  border: 1px solid black;
+  padding: 8px;
+  opacity: 0.8;
+  height: 12px;
+  width: 14px;
+}
+
+.btnSearch:hover {
+  cursor: pointer;
 }

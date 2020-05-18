@@ -32,6 +32,21 @@ class LoggedIn extends Component {
       });
   };
 
+  onAddList = (newList) => {
+    console.log("new list name: ", newList);
+
+    axios
+      .post("/addList", { name: newList })
+      .then((response) => {
+        // response == "done" from backend
+        console.log("frontend: list added");
+        this.getListsFromDb();
+      })
+      .catch((error) => {
+        console.log("Error adding list: ", error);
+      });
+  };
+
   getSuggestedBooksFromDb = () => {
     axios
       .get("/getSuggestedBooksList")
@@ -140,6 +155,7 @@ class LoggedIn extends Component {
             lists={this.state.lists}
             onClickListItem={this.onClickListItem}
             onDeleteBookFromList={this.onDeleteBookFromList}
+            onAddList={this.onAddList}
           />
           <Dashboard
             searchResults={this.state.searchResults}

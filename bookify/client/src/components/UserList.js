@@ -5,6 +5,8 @@ class UserList extends Component {
   state = {
     activeLists: [],
     activeEditLists: [],
+    activeSearch: false,
+    addListQuery: "",
   };
 
   clickListItem = (event) => {
@@ -68,6 +70,22 @@ class UserList extends Component {
       event.target.getAttribute("book"),
       event.target.getAttribute("list")
     );
+  };
+
+  onBtnSearch = () => {
+    console.log("search button clicked");
+    this.setState({ activeSearch: !this.state.activeSearch });
+  };
+
+  onInputChange = (event) => {
+    console.log(event.target.value);
+    this.setState({ addListQuery: event.target.value });
+  };
+
+  onClickAddList = () => {
+    this.props.onAddList(this.state.addListQuery);
+    document.getElementById("inputAddList").value = "";
+    this.setState({ addListQuery: "" });
   };
 
   render() {
@@ -142,7 +160,39 @@ class UserList extends Component {
       );
     });
 
-    return <div className="list-container">{listsOfUser}</div>;
+    return (
+      <div className="list-container">
+        <div className="lists-only">{listsOfUser}</div>
+        <div className="search-only">
+          {this.state.addListQuery !== "" ? (
+            <img
+              src="/images/plus-icon.png"
+              className="btnSearch"
+              alt="plus-icon"
+              onClick={this.onClickAddList}
+            />
+          ) : (
+            <img
+              src="/images/plus-icon.png"
+              className="btnSearch"
+              alt="plus-icon"
+              onClick={this.onBtnSearch}
+            />
+          )}
+
+          {this.state.activeSearch === true ? (
+            <input
+              id="inputAddList"
+              type="text"
+              className="inputAddList"
+              name="addList"
+              placeholder=""
+              onChange={this.onInputChange}
+            />
+          ) : null}
+        </div>
+      </div>
+    );
   }
 }
 
