@@ -187,6 +187,18 @@ router.post("/addList", (request, response, next) => {
     });
 });
 
+router.post("/deleteList", (request, response, next) => {
+  List.findOneAndDelete({ owner: request.user._id, name: request.body.name })
+    .then((list) => {
+      console.log("backend: list deleted");
+      response.send("done");
+    })
+    .catch((error) => {
+      console.log("Error deleting list: ", error);
+      next();
+    });
+});
+
 router.post("/deleteBookFromList", (request, response, next) => {
   const { book, list } = request.body;
   //console.log("in backend: ", book, list);
