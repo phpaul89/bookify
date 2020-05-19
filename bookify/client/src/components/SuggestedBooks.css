@@ -1,0 +1,59 @@
+.suggestedListWrapper {
+  width: 100%;
+}
+
+.bookInSuggestedList {
+  width: 100%;
+  background-color: lightgoldenrodyellow;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.suggestedImage {
+  width: 100%;
+  margin: 4% 0 4% 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+.suggestedHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.suggestedCounter {
+  background-color: lightpink;
+}
+
+.suggestedHeaderText {
+  background-color: lightskyblue;
+}
+
+.suggestedSlider {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.suggestedAction {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.suggestedAccept {
+  background-color: lightgreen;
+}
+
+.suggestedDecline {
+  background-color: lightsalmon;
+}
