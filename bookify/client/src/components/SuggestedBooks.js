@@ -10,8 +10,18 @@ class SuggestedBooks extends Component {
     console.log("Mounted suggestions");
   };
 
-  testMe = () => {
-    console.log("test");
+  rejectSuggestion = (event) => {
+    console.log("Title: ", event.target.getAttribute("title"));
+    console.log("By: ", event.target.getAttribute("suggestedby"));
+    console.log("Comment: ", event.target.getAttribute("comment"));
+
+    this.props.rejectSuggestion(
+      event.target.getAttribute("title"),
+      event.target.getAttribute("suggestedby"),
+      event.target.getAttribute("comment")
+    );
+
+    this.setState({ index: 0 });
   };
 
   slideBack = () => {
@@ -33,36 +43,66 @@ class SuggestedBooks extends Component {
   render() {
     const suggestedList = this.props.suggestedList.map((suggestedBook) => {
       return (
-        <div className="suggestedImage">
-          <img src={suggestedBook.cover.medium} alt="" />
+        <div className="bookInSuggestedList">
+          <div className="suggestedImage">
+            <img src={suggestedBook.cover.medium} alt="" />
+            <img
+              src="/images/arrow-left.png"
+              className="previous"
+              onClick={this.slideBack}
+              alt=""
+            />
+            <img
+              src="/images/arrow-right.png"
+              className="next"
+              onClick={this.slideForward}
+              alt=""
+            />
+          </div>
+          <div className="suggestedInfo">
+            <div className="suggestedBy">
+              {suggestedBook.suggestedBy} comments:
+            </div>
+            <div className="suggestedComment">"{suggestedBook.comment}"</div>
+          </div>
+          <div className="suggestedAction">
+            <img
+              src="/images/checked.png"
+              alt=""
+              className="suggestedAccept"
+              title={suggestedBook.title}
+              suggestedby={suggestedBook.suggestedBy}
+              comment={suggestedBook.comment}
+              onClick={this.acceptSuggestion}
+            />
+            <img
+              src="/images/cancel.png"
+              alt=""
+              className="suggestedDecline"
+              title={suggestedBook.title}
+              suggestedby={suggestedBook.suggestedBy}
+              comment={suggestedBook.comment}
+              onClick={this.rejectSuggestion}
+            />
+          </div>
         </div>
       );
     });
     return (
-      <div className="suggestedListWrapper">
-        <div className="bookInSuggestedList">
-          <div className="suggestedHeader">
-            <div className="suggestedCounter">
-              {this.props.suggestedList.length}
+      <div className="suggestionWrapper">
+        {this.props.suggestedList.length === 0 ? (
+          <div className="suggestedListWrapper">Empty</div>
+        ) : (
+          <div className="suggestedListWrapper">
+            <div className="suggestedHeader">
+              <div className="suggestedCounter">
+                {this.props.suggestedList.length}
+              </div>
+              <div className="suggestedHeaderText">new suggestions</div>
             </div>
-            <div className="suggestedHeaderText">new suggestions</div>
+            {suggestedList[this.state.index]}
           </div>
-          {suggestedList[this.state.index]}
-          <div className="suggestedSlider">
-            <div className="slideLeft" onClick={this.slideBack}>
-              Previous
-            </div>
-            <div className="slideRight" onClick={this.slideForward}>
-              Next
-            </div>
-          </div>
-          <div className="suggestedAction">
-            <div className="suggestedAccept" onClick={this.testMe}>
-              Accept
-            </div>
-            <div className="suggestedDecline">Decline</div>
-          </div>
-        </div>
+        )}
       </div>
     );
   }

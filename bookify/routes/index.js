@@ -303,6 +303,26 @@ router.get("/getSuggestedBooksList", (request, response, next) => {
     });
 });
 
+router.post("/rejectSuggestion", (request, response, next) => {
+  const { title, suggestedBy, comment } = request.body;
+
+  console.log(title, suggestedBy, comment);
+
+  SuggestedBook.deleteOne({
+    title: title,
+    suggestedBy: suggestedBy,
+    comment: comment,
+  })
+    .then((sBook) => {
+      console.log("Backend: removed suggested book successfully: ", sBook);
+      response.send("removed");
+    })
+    .catch((error) => {
+      console.log("Error at removing suggested book: ", error);
+      next();
+    });
+});
+
 router.post("/follow/:id", (req, res) => {
   console.log("/follow: ", req.params.id);
   User.findOne({ _id: req.params.id }).then((user) => {

@@ -48,6 +48,7 @@ class LoggedIn extends Component {
   };
 
   getSuggestedBooksFromDb = () => {
+    console.log("getting suggested books now");
     axios
       .get("/getSuggestedBooksList")
       .then((response) => {
@@ -57,6 +58,27 @@ class LoggedIn extends Component {
       })
       .catch((error) => {
         console.log("Error getting suggested books: ", error);
+      });
+  };
+
+  rejectSuggestion = (title, suggestedBy, comment) => {
+    console.log("rejecting suggestion now");
+    console.log("Title: ", title);
+    console.log("By: ", suggestedBy);
+    console.log("Comment: ", comment);
+
+    axios
+      .post("/rejectSuggestion", {
+        title: title,
+        suggestedBy: suggestedBy,
+        comment: comment,
+      })
+      .then((response) => {
+        console.log("frontend: suggestion rejected successfully", response);
+        this.getSuggestedBooksFromDb();
+      })
+      .catch((error) => {
+        console.log("Error at rejecting suggestion: ", error);
       });
   };
 
@@ -109,8 +131,11 @@ class LoggedIn extends Component {
       .then((response) => {
         //console.log(response);
         const bookFromDb = response.data;
-        //console.log(bookFromDb);
-        this.setState({ searchResults: bookFromDb });
+        console.log("got this book from database: ", bookFromDb);
+        this.setState({
+          //searchResults: [...this.state.searchResults, ...bookFromDb], **works
+          searchResults: bookFromDb,
+        });
       })
       .catch((error) => {
         console.log("Error at onClickListItem: ", error);
@@ -176,6 +201,7 @@ class LoggedIn extends Component {
             onAddList={this.onAddList}
             onDeleteList={this.onDeleteList}
           />
+
           <Dashboard
             searchResults={this.state.searchResults}
             updateSearchResults={this.updateSearchResults}
@@ -183,7 +209,11 @@ class LoggedIn extends Component {
             onClickShareBook={this.onShareBook}
             lists={this.state.lists}
           />
-          <RightSidebar suggestedList={this.state.suggestedList} />
+
+          <RightSidebar
+            suggestedList={this.state.suggestedList}
+            rejectSuggestion={this.rejectSuggestion}
+          />
         </div>
       </div>
     );
