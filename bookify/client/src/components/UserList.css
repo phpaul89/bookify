@@ -23,6 +23,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  transition-duration: 0.4s;
 }
 
 .arrowListName:hover {
@@ -198,8 +199,10 @@
   opacity: 0.8;
   height: 12px;
   width: 14px;
+  transition-duration: 0.4s;
 }
 
 .btnSearch:hover {
   cursor: pointer;
+  background-color: #f0f0f0;
 }

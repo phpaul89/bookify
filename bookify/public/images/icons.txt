@@ -3,3 +3,6 @@ Font HK Grotesk by ... - Font HK Grotesk http://cargocollective.com/hanken/HK-Gr
 Edit List: Icon mad eby Freepik from flaticon.com
 Plus: by Freepik flaticon
 Pulse: loading.io free license
+Arrows: by Roundicons flaticon
+Accept: Roundicons
+Decline: Freepik
