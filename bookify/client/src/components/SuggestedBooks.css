@@ -50,6 +50,7 @@
 .suggestedImage .previous:hover,
 .next:hover {
   opacity: 1;
+  cursor: pointer;
 }
 
 .suggestedHeader {
@@ -66,6 +67,19 @@
   height: 100%;
   padding: 5px 10px 5px 10px;
   font-weight: bold;
+  animation: colorchange 2s infinite;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+  cursor: default;
+}
+
+@keyframes colorchange {
+  from {
+    background-color: rgb(255, 235, 239);
+  }
+  to {
+    background-color: rgb(253, 180, 180);
+  }
 }
 
 .suggestedHeaderText {
@@ -76,6 +90,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  cursor: default;
 }
 
 .suggestedInfo {
@@ -111,10 +126,15 @@
   align-items: center;
 }
 
-.suggestedAccept {
-  width: 20%;
+.suggestedAccept,
+.suggestedDecline {
+  opacity: 0.7;
+  width: 25%;
+  transition-duration: 0.4s;
 }
 
-.suggestedDecline {
-  width: 20%;
+.suggestedAccept:hover,
+.suggestedDecline:hover {
+  opacity: 1;
+  cursor: pointer;
 }

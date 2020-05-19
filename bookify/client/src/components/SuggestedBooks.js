@@ -10,6 +10,16 @@ class SuggestedBooks extends Component {
     console.log("Mounted suggestions");
   };
 
+  acceptSuggestion = (event) => {
+    console.log("accept suggested book");
+
+    this.props.acceptSuggestion(
+      event.target.getAttribute("title"),
+      event.target.getAttribute("suggestedby"),
+      event.target.getAttribute("comment")
+    );
+  };
+
   rejectSuggestion = (event) => {
     console.log("Title: ", event.target.getAttribute("title"));
     console.log("By: ", event.target.getAttribute("suggestedby"));

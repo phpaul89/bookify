@@ -6,3 +6,4 @@ Pulse: loading.io free license
 Arrows: by Roundicons flaticon
 Accept: Roundicons
 Decline: Freepik
+Delete: Smashicons
