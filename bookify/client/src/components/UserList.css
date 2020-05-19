@@ -116,9 +116,17 @@
 }
 
 .deleteBookFromList {
+  opacity: 0.4;
+  width: 20px;
   font-style: normal;
   margin: 0;
   padding: 0 10px 0 10px;
+  transition-duration: 0.4s;
+}
+
+.deleteBookFromList:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 .list ul li p {

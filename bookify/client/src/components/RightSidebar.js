@@ -10,6 +10,7 @@ class RightSidebar extends Component {
           <SuggestedBooks
             suggestedList={this.props.suggestedList}
             rejectSuggestion={this.props.rejectSuggestion}
+            acceptSuggestion={this.props.acceptSuggestion}
           />
         </div>
         <div className="right-section">Newest books</div>

@@ -24,7 +24,7 @@ class LoggedIn extends Component {
       .then((listsOfUser) => {
         //console.log("Success getting lists from database: ", listsOfUser);
         let listDataOfUser = listsOfUser.data;
-        //console.log(listDataOfUser);
+        console.log(listDataOfUser);
         this.setState({ lists: listDataOfUser });
       })
       .catch((error) => {
@@ -53,11 +53,30 @@ class LoggedIn extends Component {
       .get("/getSuggestedBooksList")
       .then((response) => {
         let listDataOfSuggestedBooks = response.data;
-        //console.log(listDataOfSuggestedBooks);
+        //console.log("here now", listDataOfSuggestedBooks);
         this.setState({ suggestedList: listDataOfSuggestedBooks });
       })
       .catch((error) => {
         console.log("Error getting suggested books: ", error);
+      });
+  };
+
+  acceptSuggestion = (title, suggestedBy, comment) => {
+    console.log("accept: ", title, suggestedBy, comment);
+
+    axios
+      .post("/acceptSuggestion", {
+        title: title,
+        suggestedBy: suggestedBy,
+        comment: comment,
+      })
+      .then((response) => {
+        console.log("frontend: added new fav: ", response);
+        this.getListsFromDb();
+        this.getSuggestedBooksFromDb();
+      })
+      .catch((error) => {
+        console.log("frontend: error adding fav: ", error);
       });
   };
 
@@ -213,6 +232,7 @@ class LoggedIn extends Component {
           <RightSidebar
             suggestedList={this.state.suggestedList}
             rejectSuggestion={this.rejectSuggestion}
+            acceptSuggestion={this.acceptSuggestion}
           />
         </div>
       </div>
