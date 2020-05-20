@@ -14,8 +14,19 @@ class LoggedIn extends Component {
 
   componentDidMount = () => {
     console.log("Mounting and getting lists from database");
+    this.booksFromFollowersList();
     this.getListsFromDb();
     this.getSuggestedBooksFromDb();
+  };
+
+  booksFromFollowersList = () => {
+    axios.get("/followers/getbooks").then((listOfBooks) => {
+      console.log("Front end books list", listOfBooks.data.booksFromFollowers);
+      // this.state.searchResults.push(listOfBooks.data.booksFromFollowers);
+      this.setState({
+        searchResults: listOfBooks.data.booksFromFollowers,
+      });
+    });
   };
 
   getListsFromDb = () => {

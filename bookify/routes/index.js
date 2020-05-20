@@ -618,33 +618,4 @@ router.post("/acceptSuggestion", (request, response, next) => {
   });
 });
 
-router.post("/follow/:id", (req, res) => {
-  console.log("/follow: ", req.params.id);
-  User.findOne({ _id: req.params.id }).then((user) => {
-    User.findOne({ _id: req.user._id }).then((loggedInUser) => {
-      // console.log("logged", loggedInUser);
-      // console.log("following", user._id);
-      loggedInUser.following.includes(user._id, 0)
-        ? res.send("You already follow this user")
-        : loggedInUser.following.push(user._id);
-      loggedInUser.save().then((result) => {
-        // console.log("result: ", result);
-        res.send(result);
-      });
-    });
-    // console.log(user);
-  });
-});
-
-// list of users that will appear as suggestions to follow - See Users component
-router.get("/users", (req, res) => {
-  User.find({}).then((users) => {
-    users = users.filter((el) => {
-      // console.log("Filter", el, req.user);
-      return !el._id.equals(req.user._id);
-    });
-    res.send({ users, loggedIn: req.user });
-  });
-});
-
 module.exports = router;
