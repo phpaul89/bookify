@@ -35,7 +35,7 @@ class LoggedIn extends Component {
       .then((listsOfUser) => {
         //console.log("Success getting lists from database: ", listsOfUser);
         let listDataOfUser = listsOfUser.data;
-        console.log(listDataOfUser);
+        //console.log(listDataOfUser);
         this.setState({ lists: listDataOfUser });
       })
       .catch((error) => {
@@ -113,19 +113,27 @@ class LoggedIn extends Component {
   };
 
   updateSearchResults = (bookJSON, isbn) => {
-    this.setState({
-      // correct way to push into state property array: instead of '.push' using spread operator
-      searchResults: [
-        {
-          isbn: isbn,
-          title: bookJSON.data[`ISBN:${isbn}`].title,
-          cover: bookJSON.data[`ISBN:${isbn}`].cover,
-          by_statement: bookJSON.data[`ISBN:${isbn}`]["by_statement"],
-          publish_date: bookJSON.data[`ISBN:${isbn}`]["publish_date"],
-          url: bookJSON.data[`ISBN:${isbn}`].url,
-        },
-      ],
-    });
+    if (isbn === "reset") {
+      this.setState({ searchResults: [] });
+    } else {
+      console.log(bookJSON.data[`ISBN:${isbn}`].cover.medium);
+      console.log(bookJSON.data[`ISBN:${isbn}`]["by_statement"]);
+
+      this.setState({
+        // correct way to push into state property array: instead of '.push' using spread operator
+        searchResults: [
+          ...this.state.searchResults,
+          {
+            isbn: isbn,
+            title: bookJSON.data[`ISBN:${isbn}`].title,
+            cover: bookJSON.data[`ISBN:${isbn}`].cover,
+            by: bookJSON.data[`ISBN:${isbn}`]["by_statement"],
+            year: bookJSON.data[`ISBN:${isbn}`]["publish_date"],
+            url: bookJSON.data[`ISBN:${isbn}`].url,
+          },
+        ],
+      });
+    }
   };
 
   onSaveToList = (listName, bookTitle) => {
@@ -153,23 +161,42 @@ class LoggedIn extends Component {
       });
   };
 
-  onClickListItem = (bookTitle) => {
+  onClickListItem = (bookTitle, listName) => {
+    console.log(listName);
     //console.log("In LoggedIn component, book title: ", bookTitle);
     // .post needed somehow, .get doesn't work for passing variable
-    axios
-      .post("/getBook", { title: bookTitle })
-      .then((response) => {
-        //console.log(response);
-        const bookFromDb = response.data;
-        console.log("got this book from database: ", bookFromDb);
-        this.setState({
-          //searchResults: [...this.state.searchResults, ...bookFromDb], **works
-          searchResults: bookFromDb,
+
+    if (listName !== "Special") {
+      axios
+        .post("/getBook", { title: bookTitle })
+        .then((response) => {
+          //console.log(response);
+          const bookFromDb = response.data;
+          console.log("got this book from database: ", bookFromDb);
+          this.setState({
+            //searchResults: [...this.state.searchResults, ...bookFromDb], **works
+            searchResults: bookFromDb,
+          });
+        })
+        .catch((error) => {
+          console.log("Error at onClickListItem: ", error);
         });
-      })
-      .catch((error) => {
-        console.log("Error at onClickListItem: ", error);
-      });
+    } else {
+      axios
+        .post("/getSpecialBook", { title: bookTitle })
+        .then((response) => {
+          //console.log(response);
+          const bookFromDb = response.data;
+          console.log("got this book from database: ", bookFromDb);
+          this.setState({
+            //searchResults: [...this.state.searchResults, ...bookFromDb], **works
+            searchResults: bookFromDb,
+          });
+        })
+        .catch((error) => {
+          console.log("Error at onClickListItem: ", error);
+        });
+    }
   };
 
   onShareBook = (comment, friend, bookTitle) => {

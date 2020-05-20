@@ -101,7 +101,7 @@ class SuggestedBooks extends Component {
     return (
       <div className="suggestionWrapper">
         {this.props.suggestedList.length === 0 ? (
-          <div className="suggestedListWrapper">Empty</div>
+          <div className="suggestedListWrapper">Any book ideas?</div>
         ) : (
           <div className="suggestedListWrapper">
             <div className="suggestedHeader">
