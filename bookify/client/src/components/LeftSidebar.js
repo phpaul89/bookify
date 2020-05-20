@@ -13,7 +13,7 @@ class LeftSidebar extends Component {
             "Users left side:",
             new Date(user.createdAt).toDateString().slice(4)
           )} */}
-          <img src="/images/summer.png" className="left-section-img" />
+          <img src="/images/summer.png" className="left-section-img" alt="" />
           {user.username}
           <br />
           Following: {user.following.length}

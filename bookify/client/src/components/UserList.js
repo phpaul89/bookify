@@ -10,7 +10,10 @@ class UserList extends Component {
   };
 
   clickListItem = (event) => {
-    this.props.onClickListItem(event.target.innerHTML);
+    this.props.onClickListItem(
+      event.target.innerHTML,
+      event.target.getAttribute("list")
+    );
   };
 
   // list should toggle between hiding/showing list books
@@ -123,9 +126,30 @@ class UserList extends Component {
                 ></i>
               )}
 
-              <p key={list.name} onClick={this.clickList} name={list.name}>
-                {list.name}
-              </p>
+              <div
+                className="listNameText"
+                key={list.name}
+                onClick={this.clickList}
+                name={list.name}
+              >
+                {list.name === "Special" ? (
+                  <div
+                    className="specialListName"
+                    onClick={this.clickList}
+                    name={list.name}
+                  >
+                    <img
+                      src="/images/interface.png"
+                      alt=""
+                      onClick={this.clickList}
+                      name={list.name}
+                    />
+                    {list.name}
+                  </div>
+                ) : (
+                  list.name
+                )}
+              </div>
 
               {this.state.activeLists.includes(list.name) ||
               this.state.activeEditLists.includes(list.name) ? (
@@ -146,7 +170,11 @@ class UserList extends Component {
                   return (
                     <div key={book.isbn}>
                       <div className="book-group">
-                        <li key={book.isbn} onClick={this.clickListItem}>
+                        <li
+                          key={book.isbn}
+                          list={list.name}
+                          onClick={this.clickListItem}
+                        >
                           {book.title}
                         </li>
                         {this.state.activeEditLists.includes(list.name) ? (
@@ -172,7 +200,11 @@ class UserList extends Component {
                   return (
                     <div key={book.isbn}>
                       <div className="book-group">
-                        <li key={book.isbn} onClick={this.clickListItem}>
+                        <li
+                          key={book.isbn}
+                          list={list.name}
+                          onClick={this.clickListItem}
+                        >
                           {book.title}
                         </li>
                         {this.state.activeEditLists.includes(list.name) ? (
