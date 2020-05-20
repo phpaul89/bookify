@@ -156,6 +156,8 @@ class LoggedIn extends Component {
             onClickListItem={this.onClickListItem}
             onDeleteBookFromList={this.onDeleteBookFromList}
             onAddList={this.onAddList}
+            user={this.props.user}
+            setUser={this.props.setUser}
           />
           <Dashboard
             searchResults={this.state.searchResults}
@@ -164,7 +166,11 @@ class LoggedIn extends Component {
             onClickShareBook={this.onShareBook}
             lists={this.state.lists}
           />
-          <RightSidebar suggestedList={this.state.suggestedList} />
+          <RightSidebar
+            suggestedList={this.state.suggestedList}
+            user={this.props.user}
+            setUser={this.props.setUser}
+          />
         </div>
       </div>
     );

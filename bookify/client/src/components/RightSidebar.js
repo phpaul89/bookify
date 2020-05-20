@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../components/RightSidebar.css";
 import SuggestedBooks from "../components/SuggestedBooks.js";
+import SuggestedUsers from "../components/SuggestedUsers";
 
 class RightSidebar extends Component {
   render() {
@@ -10,7 +11,10 @@ class RightSidebar extends Component {
           <SuggestedBooks suggestedList={this.props.suggestedList} />
         </div>
         <div className="right-section">Newest books</div>
-        <div className="right-section">...</div>
+        <div className="right-section">
+          Follow
+          <SuggestedUsers user={this.props.user} setUser={this.props.setUser} />
+        </div>
       </div>
     );
   }

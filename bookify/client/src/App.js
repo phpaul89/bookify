@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
-
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-
 import LoggedIn from "./components/LoggedIn.js";
 
 class App extends Component {
@@ -14,6 +12,7 @@ class App extends Component {
   };
 
   setUser = (user) => {
+    console.log("appjs User: ", user);
     this.setState({
       user: user,
     });
@@ -38,7 +37,7 @@ class App extends Component {
           path="/"
           render={(props) => {
             return this.state.user !== null ? (
-              <LoggedIn />
+              <LoggedIn user={this.state.user} setUser={this.setUser} />
             ) : (
               <div>Please login</div>
             );
