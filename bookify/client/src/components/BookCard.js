@@ -66,13 +66,19 @@ class BookCard extends Component {
     });
 
     return (
-      <div className="allBooksFromSearchResultsTwo">
-        <div key="" className="bookInSearchResultsList">
+      <div
+        key={this.props.book.isbn}
+        className="allBooksFromSearchResultsThree"
+      >
+        <div className="bookInSearchResultsList">
           <div className="imageBookSearchResult">
-            <img
-              src={this.props.book.cover.medium} // error when no cover available
-              alt=""
-            />
+            {this.props.book.cover.medium !== undefined ? (
+              <img
+                src={this.props.book.cover.medium} // error when no cover available
+                alt=""
+              />
+            ) : null}
+
             {this.props.book.suggestedBy !== undefined ? (
               <div>
                 <div className="specialClip">

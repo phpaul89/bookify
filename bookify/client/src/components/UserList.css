@@ -66,11 +66,23 @@
   margin: 5% 0 5% 0;
 }
 
-.list p {
+.listNameText {
   text-align: center;
   width: 74%;
   padding: 0;
   margin: 5% 0 5% 0;
+}
+
+.specialListName {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.specialListName img {
+  height: 20px;
+  margin-right: 8%;
 }
 
 .list-edit {

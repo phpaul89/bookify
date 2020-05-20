@@ -8,3 +8,4 @@ Accept: Roundicons
 Decline: Freepik
 Delete: Smashicons
 Flag: Freepik
+Interface: Freepik

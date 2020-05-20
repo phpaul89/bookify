@@ -29,7 +29,7 @@ class Users extends Component {
   };
 
   render() {
-    console.log(this.state.loggedIn, this.props.user);
+    //console.log(this.state.loggedIn, this.props.user);
     const filterUsers = this.state.users.filter((el) => {
       return !this.state.loggedIn.following.includes(el._id);
     });

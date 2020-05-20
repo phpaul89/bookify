@@ -1,3 +1,16 @@
+.allBooksFromSearchResultsThree {
+  min-height: 10%;
+  width: 100%;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 0.2em;
+  box-shadow: 0 4px 8px -3px lightgray;
+  margin-bottom: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .bookInSearchResultsList {
   width: 100%;
   height: 100%;
@@ -14,6 +27,11 @@
   display: flex;
   flex-direction: column;
   justify-content: stretch;
+}
+
+.imageBookSearchResult img {
+  height: 250px;
+  width: 180px;
 }
 
 .imageBookSearchResult .specialClip {
@@ -47,7 +65,7 @@
 .specialComment {
   position: absolute;
   background-color: whitesmoke;
-  border: 1px solid lightgrey;
+  border: 1px solid gray;
   border-radius: 6px;
   padding: 6px 14px 6px 14px;
   bottom: 10%;

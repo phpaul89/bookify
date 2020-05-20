@@ -24,7 +24,7 @@ class LoggedIn extends Component {
       .then((listsOfUser) => {
         //console.log("Success getting lists from database: ", listsOfUser);
         let listDataOfUser = listsOfUser.data;
-        console.log(listDataOfUser);
+        //console.log(listDataOfUser);
         this.setState({ lists: listDataOfUser });
       })
       .catch((error) => {
@@ -102,19 +102,27 @@ class LoggedIn extends Component {
   };
 
   updateSearchResults = (bookJSON, isbn) => {
-    this.setState({
-      // correct way to push into state property array: instead of '.push' using spread operator
-      searchResults: [
-        {
-          isbn: isbn,
-          title: bookJSON.data[`ISBN:${isbn}`].title,
-          cover: bookJSON.data[`ISBN:${isbn}`].cover,
-          by_statement: bookJSON.data[`ISBN:${isbn}`]["by_statement"],
-          publish_date: bookJSON.data[`ISBN:${isbn}`]["publish_date"],
-          url: bookJSON.data[`ISBN:${isbn}`].url,
-        },
-      ],
-    });
+    if (isbn === "reset") {
+      this.setState({ searchResults: [] });
+    } else {
+      console.log(bookJSON.data[`ISBN:${isbn}`].cover.medium);
+      console.log(bookJSON.data[`ISBN:${isbn}`]["by_statement"]);
+
+      this.setState({
+        // correct way to push into state property array: instead of '.push' using spread operator
+        searchResults: [
+          ...this.state.searchResults,
+          {
+            isbn: isbn,
+            title: bookJSON.data[`ISBN:${isbn}`].title,
+            cover: bookJSON.data[`ISBN:${isbn}`].cover,
+            by: bookJSON.data[`ISBN:${isbn}`]["by_statement"],
+            year: bookJSON.data[`ISBN:${isbn}`]["publish_date"],
+            url: bookJSON.data[`ISBN:${isbn}`].url,
+          },
+        ],
+      });
+    }
   };
 
   onSaveToList = (listName, bookTitle) => {

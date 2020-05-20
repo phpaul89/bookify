@@ -126,9 +126,30 @@ class UserList extends Component {
                 ></i>
               )}
 
-              <p key={list.name} onClick={this.clickList} name={list.name}>
-                {list.name}
-              </p>
+              <div
+                className="listNameText"
+                key={list.name}
+                onClick={this.clickList}
+                name={list.name}
+              >
+                {list.name === "Special" ? (
+                  <div
+                    className="specialListName"
+                    onClick={this.clickList}
+                    name={list.name}
+                  >
+                    <img
+                      src="/images/interface.png"
+                      alt=""
+                      onClick={this.clickList}
+                      name={list.name}
+                    />
+                    {list.name}
+                  </div>
+                ) : (
+                  list.name
+                )}
+              </div>
 
               {this.state.activeLists.includes(list.name) ||
               this.state.activeEditLists.includes(list.name) ? (
