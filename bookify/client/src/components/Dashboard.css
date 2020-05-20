@@ -16,13 +16,13 @@
 }
 
 .dashboard-result {
-  min-height: 30%;
+  min-height: 10%;
+  width: 100%;
   background-color: white;
   border: 1px solid lightgray;
   border-radius: 0.2em;
   box-shadow: 0 4px 8px -3px lightgray;
   margin-bottom: 2%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
 }

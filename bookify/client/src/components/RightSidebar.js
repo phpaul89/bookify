@@ -8,7 +8,11 @@ class RightSidebar extends Component {
     return (
       <div className="right-sidebar">
         <div className="right-section">
-          <SuggestedBooks suggestedList={this.props.suggestedList} />
+          <SuggestedBooks
+            suggestedList={this.props.suggestedList}
+            rejectSuggestion={this.props.rejectSuggestion}
+            acceptSuggestion={this.props.acceptSuggestion}
+          />
         </div>
         <div className="right-section">Newest books</div>
         <div className="right-section">
