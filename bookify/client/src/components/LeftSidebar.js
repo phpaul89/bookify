@@ -27,6 +27,7 @@ class LeftSidebar extends Component {
             onClickListItem={this.props.onClickListItem}
             onDeleteBookFromList={this.props.onDeleteBookFromList}
             onAddList={this.props.onAddList}
+            onDeleteList={this.props.onDeleteList}
           />
         </div>
       </div>

@@ -1,0 +1,140 @@
+.suggestionWrapper {
+  width: 100%;
+}
+
+.suggestedListWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bookInSuggestedList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.suggestedImage {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  border-bottom: 1px solid lightgray;
+}
+
+.suggestedImage .previous {
+  opacity: 0.3;
+  position: absolute;
+  top: 40%;
+  left: 0;
+  width: 16%;
+  padding: 16px 16px 16px 0;
+  transition-duration: 0.2s;
+}
+
+.suggestedImage .next {
+  opacity: 0.3;
+  position: absolute;
+  top: 40%;
+  right: 0;
+  width: 16%;
+  padding: 16px 0 16px 16px;
+  transition-duration: 0.2s;
+}
+
+.suggestedImage .previous:hover,
+.next:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.suggestedHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+}
+
+.suggestedCounter {
+  background-color: lightpink;
+  height: 100%;
+  padding: 5px 10px 5px 10px;
+  font-weight: bold;
+  animation: colorchange 2s infinite;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+  cursor: default;
+}
+
+@keyframes colorchange {
+  from {
+    background-color: rgb(255, 235, 239);
+  }
+  to {
+    background-color: rgb(253, 180, 180);
+  }
+}
+
+.suggestedHeaderText {
+  width: 100%;
+  padding: 7px 10px 7px 10px;
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+}
+
+.suggestedInfo {
+  width: 100%;
+  margin: 4% 0 4% 0;
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.suggestedComment {
+  background-color: whitesmoke;
+  border: 1px solid lightgrey;
+  border-radius: 6px;
+  padding: 6px 14px 6px 14px;
+  margin-top: 4%;
+  margin-left: 6%;
+  margin-right: 6%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.suggestedAction {
+  margin: 10% 0 8% 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.suggestedAccept,
+.suggestedDecline {
+  opacity: 0.7;
+  width: 25%;
+  transition-duration: 0.4s;
+}
+
+.suggestedAccept:hover,
+.suggestedDecline:hover {
+  opacity: 1;
+  cursor: pointer;
+}

@@ -16,6 +16,7 @@ class UserList extends Component {
   // list should toggle between hiding/showing list books
   // add/remove toggled lists to state 'activeLists' for conditional rendering
   clickList = (event) => {
+    //console.log(this.props.lists);
     // .getAttribute("name") here instead of .name!
     const checkActive = this.state.activeLists.includes(
       event.target.getAttribute("name")
@@ -88,6 +89,15 @@ class UserList extends Component {
     this.setState({ addListQuery: "" });
   };
 
+  onClickDeleteList = (event) => {
+    console.log("Delete: ", event.target.getAttribute("name"));
+    this.props.onDeleteList(event.target.getAttribute("name"));
+    const newActiveLists = this.state.activeEditLists.filter(
+      (list) => list !== event.target.getAttribute("name")
+    );
+    this.setState({ activeEditLists: newActiveLists });
+  };
+
   render() {
     const listsOfUser = this.props.lists.map((list) => {
       return (
@@ -112,9 +122,11 @@ class UserList extends Component {
                   name={list.name}
                 ></i>
               )}
+
               <p key={list.name} onClick={this.clickList} name={list.name}>
                 {list.name}
               </p>
+
               {this.state.activeLists.includes(list.name) ||
               this.state.activeEditLists.includes(list.name) ? (
                 <img
@@ -126,9 +138,36 @@ class UserList extends Component {
                 />
               ) : null}
             </div>
+
             {this.state.activeLists.includes(list.name) ||
             this.state.activeEditLists.includes(list.name) ? (
               <ul>
+                {list.special.map((book) => {
+                  return (
+                    <div key={book.isbn}>
+                      <div className="book-group">
+                        <li key={book.isbn} onClick={this.clickListItem}>
+                          {book.title}
+                        </li>
+                        {this.state.activeEditLists.includes(list.name) ? (
+                          <img
+                            src="/images/delete-icon.png"
+                            className="deleteBookFromList"
+                            onClick={this.onClickDelFromList}
+                            book={book.title}
+                            list={list.name}
+                            alt="delete-icon"
+                          />
+                        ) : null}
+                      </div>
+
+                      <div className="separator-wrapper">
+                        <div className="list-item-separator"></div>
+                      </div>
+                    </div>
+                  );
+                })}
+
                 {list.books.map((book) => {
                   return (
                     <div key={book.isbn}>
@@ -137,22 +176,35 @@ class UserList extends Component {
                           {book.title}
                         </li>
                         {this.state.activeEditLists.includes(list.name) ? (
-                          <i
+                          <img
+                            src="/images/delete-icon.png"
                             className="deleteBookFromList"
                             onClick={this.onClickDelFromList}
                             book={book.title}
                             list={list.name}
-                          >
-                            DEL
-                          </i>
+                            alt="delete-icon"
+                          />
                         ) : null}
                       </div>
+
                       <div className="separator-wrapper">
                         <div className="list-item-separator"></div>
                       </div>
                     </div>
                   );
                 })}
+
+                {this.state.activeEditLists.includes(list.name) ? (
+                  <div className="deleteList">
+                    <i
+                      className="delButton"
+                      onClick={this.onClickDeleteList}
+                      name={list.name}
+                    >
+                      Delete List
+                    </i>
+                  </div>
+                ) : null}
               </ul>
             ) : null}
           </div>

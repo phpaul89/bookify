@@ -24,7 +24,7 @@ class LoggedIn extends Component {
       .then((listsOfUser) => {
         //console.log("Success getting lists from database: ", listsOfUser);
         let listDataOfUser = listsOfUser.data;
-        //console.log(listDataOfUser);
+        console.log(listDataOfUser);
         this.setState({ lists: listDataOfUser });
       })
       .catch((error) => {
@@ -33,13 +33,13 @@ class LoggedIn extends Component {
   };
 
   onAddList = (newList) => {
-    console.log("new list name: ", newList);
+    //console.log("new list name: ", newList);
 
     axios
       .post("/addList", { name: newList })
       .then((response) => {
         // response == "done" from backend
-        console.log("frontend: list added");
+        //console.log("frontend: list added");
         this.getListsFromDb();
       })
       .catch((error) => {
@@ -48,15 +48,56 @@ class LoggedIn extends Component {
   };
 
   getSuggestedBooksFromDb = () => {
+    console.log("getting suggested books now");
     axios
       .get("/getSuggestedBooksList")
       .then((response) => {
         let listDataOfSuggestedBooks = response.data;
-        //console.log(listDataOfSuggestedBooks);
+        //console.log("here now", listDataOfSuggestedBooks);
         this.setState({ suggestedList: listDataOfSuggestedBooks });
       })
       .catch((error) => {
         console.log("Error getting suggested books: ", error);
+      });
+  };
+
+  acceptSuggestion = (title, suggestedBy, comment) => {
+    console.log("accept: ", title, suggestedBy, comment);
+
+    axios
+      .post("/acceptSuggestion", {
+        title: title,
+        suggestedBy: suggestedBy,
+        comment: comment,
+      })
+      .then((response) => {
+        console.log("frontend: added new fav: ", response);
+        this.getListsFromDb();
+        this.getSuggestedBooksFromDb();
+      })
+      .catch((error) => {
+        console.log("frontend: error adding fav: ", error);
+      });
+  };
+
+  rejectSuggestion = (title, suggestedBy, comment) => {
+    console.log("rejecting suggestion now");
+    console.log("Title: ", title);
+    console.log("By: ", suggestedBy);
+    console.log("Comment: ", comment);
+
+    axios
+      .post("/rejectSuggestion", {
+        title: title,
+        suggestedBy: suggestedBy,
+        comment: comment,
+      })
+      .then((response) => {
+        console.log("frontend: suggestion rejected successfully", response);
+        this.getSuggestedBooksFromDb();
+      })
+      .catch((error) => {
+        console.log("Error at rejecting suggestion: ", error);
       });
   };
 
@@ -109,26 +150,34 @@ class LoggedIn extends Component {
       .then((response) => {
         //console.log(response);
         const bookFromDb = response.data;
-        //console.log(bookFromDb);
-        this.setState({ searchResults: bookFromDb });
+        console.log("got this book from database: ", bookFromDb);
+        this.setState({
+          //searchResults: [...this.state.searchResults, ...bookFromDb], **works
+          searchResults: bookFromDb,
+        });
       })
       .catch((error) => {
         console.log("Error at onClickListItem: ", error);
       });
   };
 
-  onShareBook = (bookTitle) => {
+  onShareBook = (comment, friend, bookTitle) => {
     //console.log("book to share: ", bookTitle);
     axios
       .post("/shareBook", {
         title: bookTitle,
-        friend: "Phillip",
-        comment: "A great book!",
+        friend: friend,
+        comment: comment,
       })
       .then((response) => {
-        console.log("sharing successful on frontend: ", response);
-        //const suggestedBookFromDb = response.data;
-        //this.setState({ suggestedList: suggestedBookFromDb });
+        console.log("response from backend: ", response.data);
+        if (response.data === "Success") {
+          console.log("Book shared successfully!");
+        } else if (response.data === "Failure") {
+          console.log("User not found");
+        } else {
+          console.log("Unexpected error sharing book");
+        }
       })
       .catch((error) => {
         console.log("Error at sharing book: ", error);
@@ -147,6 +196,19 @@ class LoggedIn extends Component {
       });
   };
 
+  onDeleteList = (delList) => {
+    axios
+      .post("/deleteList", { name: delList })
+      .then((response) => {
+        // response == "done" from backend
+        //console.log("frontend: list added");
+        this.getListsFromDb();
+      })
+      .catch((error) => {
+        console.log("Error adding list: ", error);
+      });
+  };
+
   render() {
     return (
       <div className="app">
@@ -156,9 +218,14 @@ class LoggedIn extends Component {
             onClickListItem={this.onClickListItem}
             onDeleteBookFromList={this.onDeleteBookFromList}
             onAddList={this.onAddList}
+<<<<<<< HEAD
             user={this.props.user}
             setUser={this.props.setUser}
+=======
+            onDeleteList={this.onDeleteList}
+>>>>>>> 59781723bfe359b8454d628dcbb46e9ad5d41602
           />
+
           <Dashboard
             searchResults={this.state.searchResults}
             updateSearchResults={this.updateSearchResults}
@@ -166,10 +233,18 @@ class LoggedIn extends Component {
             onClickShareBook={this.onShareBook}
             lists={this.state.lists}
           />
+<<<<<<< HEAD
           <RightSidebar
             suggestedList={this.state.suggestedList}
             user={this.props.user}
             setUser={this.props.setUser}
+=======
+
+          <RightSidebar
+            suggestedList={this.state.suggestedList}
+            rejectSuggestion={this.rejectSuggestion}
+            acceptSuggestion={this.acceptSuggestion}
+>>>>>>> 59781723bfe359b8454d628dcbb46e9ad5d41602
           />
         </div>
       </div>
