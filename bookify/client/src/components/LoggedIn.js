@@ -219,11 +219,18 @@ class LoggedIn extends Component {
             onDeleteBookFromList={this.onDeleteBookFromList}
             onAddList={this.onAddList}
 <<<<<<< HEAD
+<<<<<<< HEAD
             user={this.props.user}
             setUser={this.props.setUser}
 =======
             onDeleteList={this.onDeleteList}
 >>>>>>> 59781723bfe359b8454d628dcbb46e9ad5d41602
+=======
+            user={this.props.user}
+            setUser={this.props.setUser}
+            onDeleteList={this.onDeleteList}
+
+>>>>>>> 2904e7c458753d9e053a097f3b84fcebcbc7ddb9
           />
 
           <Dashboard
@@ -234,17 +241,25 @@ class LoggedIn extends Component {
             lists={this.state.lists}
           />
 <<<<<<< HEAD
+<<<<<<< HEAD
           <RightSidebar
             suggestedList={this.state.suggestedList}
             user={this.props.user}
             setUser={this.props.setUser}
 =======
+=======
+>>>>>>> 2904e7c458753d9e053a097f3b84fcebcbc7ddb9
 
           <RightSidebar
+            user={this.props.user}
+            setUser={this.props.setUser}
             suggestedList={this.state.suggestedList}
             rejectSuggestion={this.rejectSuggestion}
             acceptSuggestion={this.acceptSuggestion}
+<<<<<<< HEAD
 >>>>>>> 59781723bfe359b8454d628dcbb46e9ad5d41602
+=======
+>>>>>>> 2904e7c458753d9e053a097f3b84fcebcbc7ddb9
           />
         </div>
       </div>
