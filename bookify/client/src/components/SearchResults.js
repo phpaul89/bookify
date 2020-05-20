@@ -7,12 +7,14 @@ class SearchResults extends Component {
     //console.log(this.props.searchResults);
     const searchResultsList = this.props.searchResults.map((book) => {
       return (
-        <BookCard
-          book={book}
-          lists={this.props.lists}
-          onSaveToList={this.props.onSaveToList}
-          onClickShareBook={this.props.onClickShareBook}
-        />
+        <div key={book.isbn}>
+          <BookCard
+            book={book}
+            lists={this.props.lists}
+            onSaveToList={this.props.onSaveToList}
+            onClickShareBook={this.props.onClickShareBook}
+          />
+        </div>
       );
     });
 
