@@ -218,7 +218,10 @@ class LoggedIn extends Component {
             onClickListItem={this.onClickListItem}
             onDeleteBookFromList={this.onDeleteBookFromList}
             onAddList={this.onAddList}
+            user={this.props.user}
+            setUser={this.props.setUser}
             onDeleteList={this.onDeleteList}
+
           />
 
           <Dashboard
@@ -230,6 +233,8 @@ class LoggedIn extends Component {
           />
 
           <RightSidebar
+            user={this.props.user}
+            setUser={this.props.setUser}
             suggestedList={this.state.suggestedList}
             rejectSuggestion={this.rejectSuggestion}
             acceptSuggestion={this.acceptSuggestion}

@@ -1,0 +1,10 @@
+.add-follower-img {
+  padding: 8px;
+  opacity: 0.8;
+  height: 12px;
+  width: 14px;
+}
+
+.add-follower-div-img {
+  display: flex;
+}
