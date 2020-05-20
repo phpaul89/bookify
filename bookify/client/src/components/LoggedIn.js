@@ -142,23 +142,42 @@ class LoggedIn extends Component {
       });
   };
 
-  onClickListItem = (bookTitle) => {
+  onClickListItem = (bookTitle, listName) => {
+    console.log(listName);
     //console.log("In LoggedIn component, book title: ", bookTitle);
     // .post needed somehow, .get doesn't work for passing variable
-    axios
-      .post("/getBook", { title: bookTitle })
-      .then((response) => {
-        //console.log(response);
-        const bookFromDb = response.data;
-        console.log("got this book from database: ", bookFromDb);
-        this.setState({
-          //searchResults: [...this.state.searchResults, ...bookFromDb], **works
-          searchResults: bookFromDb,
+
+    if (listName !== "Special") {
+      axios
+        .post("/getBook", { title: bookTitle })
+        .then((response) => {
+          //console.log(response);
+          const bookFromDb = response.data;
+          console.log("got this book from database: ", bookFromDb);
+          this.setState({
+            //searchResults: [...this.state.searchResults, ...bookFromDb], **works
+            searchResults: bookFromDb,
+          });
+        })
+        .catch((error) => {
+          console.log("Error at onClickListItem: ", error);
         });
-      })
-      .catch((error) => {
-        console.log("Error at onClickListItem: ", error);
-      });
+    } else {
+      axios
+        .post("/getSpecialBook", { title: bookTitle })
+        .then((response) => {
+          //console.log(response);
+          const bookFromDb = response.data;
+          console.log("got this book from database: ", bookFromDb);
+          this.setState({
+            //searchResults: [...this.state.searchResults, ...bookFromDb], **works
+            searchResults: bookFromDb,
+          });
+        })
+        .catch((error) => {
+          console.log("Error at onClickListItem: ", error);
+        });
+    }
   };
 
   onShareBook = (comment, friend, bookTitle) => {
@@ -218,19 +237,9 @@ class LoggedIn extends Component {
             onClickListItem={this.onClickListItem}
             onDeleteBookFromList={this.onDeleteBookFromList}
             onAddList={this.onAddList}
-<<<<<<< HEAD
-<<<<<<< HEAD
-            user={this.props.user}
-            setUser={this.props.setUser}
-=======
-            onDeleteList={this.onDeleteList}
->>>>>>> 59781723bfe359b8454d628dcbb46e9ad5d41602
-=======
             user={this.props.user}
             setUser={this.props.setUser}
             onDeleteList={this.onDeleteList}
-
->>>>>>> 2904e7c458753d9e053a097f3b84fcebcbc7ddb9
           />
 
           <Dashboard
@@ -240,15 +249,6 @@ class LoggedIn extends Component {
             onClickShareBook={this.onShareBook}
             lists={this.state.lists}
           />
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <RightSidebar
-            suggestedList={this.state.suggestedList}
-            user={this.props.user}
-            setUser={this.props.setUser}
-=======
-=======
->>>>>>> 2904e7c458753d9e053a097f3b84fcebcbc7ddb9
 
           <RightSidebar
             user={this.props.user}
@@ -256,10 +256,6 @@ class LoggedIn extends Component {
             suggestedList={this.state.suggestedList}
             rejectSuggestion={this.rejectSuggestion}
             acceptSuggestion={this.acceptSuggestion}
-<<<<<<< HEAD
->>>>>>> 59781723bfe359b8454d628dcbb46e9ad5d41602
-=======
->>>>>>> 2904e7c458753d9e053a097f3b84fcebcbc7ddb9
           />
         </div>
       </div>

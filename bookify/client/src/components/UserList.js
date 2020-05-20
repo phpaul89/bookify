@@ -10,7 +10,10 @@ class UserList extends Component {
   };
 
   clickListItem = (event) => {
-    this.props.onClickListItem(event.target.innerHTML);
+    this.props.onClickListItem(
+      event.target.innerHTML,
+      event.target.getAttribute("list")
+    );
   };
 
   // list should toggle between hiding/showing list books
@@ -146,7 +149,11 @@ class UserList extends Component {
                   return (
                     <div key={book.isbn}>
                       <div className="book-group">
-                        <li key={book.isbn} onClick={this.clickListItem}>
+                        <li
+                          key={book.isbn}
+                          list={list.name}
+                          onClick={this.clickListItem}
+                        >
                           {book.title}
                         </li>
                         {this.state.activeEditLists.includes(list.name) ? (
@@ -172,7 +179,11 @@ class UserList extends Component {
                   return (
                     <div key={book.isbn}>
                       <div className="book-group">
-                        <li key={book.isbn} onClick={this.clickListItem}>
+                        <li
+                          key={book.isbn}
+                          list={list.name}
+                          onClick={this.clickListItem}
+                        >
                           {book.title}
                         </li>
                         {this.state.activeEditLists.includes(list.name) ? (

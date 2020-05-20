@@ -22,6 +22,7 @@ class BookCard extends Component {
   };
 
   onClickShare = (event) => {
+    console.log(this.props.book);
     this.setState({
       activeShare: !this.state.activeShare,
       activeAdd: false,
@@ -72,6 +73,16 @@ class BookCard extends Component {
               src={this.props.book.cover.medium} // error when no cover available
               alt=""
             />
+            {this.props.book.suggestedBy !== undefined ? (
+              <div>
+                <div className="specialClip">
+                  <p className="specialFriend">{this.props.book.suggestedBy}</p>
+                </div>
+                <div className="specialComment">
+                  {this.props.book.comments[0]}
+                </div>
+              </div>
+            ) : null}
           </div>
           <div className="contentBookSearchResult">
             <div className="infoBookSearchResult">
@@ -79,24 +90,27 @@ class BookCard extends Component {
               <p>Author: {this.props.book.by}</p>
               <p>Published: {this.props.book.year}</p>
               <p>ISBN: {this.props.book.isbn}</p>
+
               <a href={this.props.book.url}>Details</a>
             </div>
-            <div className="buttonsBookSearchResult">
-              <input
-                className="addButton"
-                type="button"
-                onClick={this.onClickAdd}
-                value="Add to List"
-                name={this.props.book.title}
-              />
-              <input
-                className="shareButton"
-                type="button"
-                onClick={this.onClickShare}
-                value="Share"
-                name={this.props.book.title}
-              />
-            </div>
+            {this.props.book.suggestedBy !== undefined ? null : (
+              <div className="buttonsBookSearchResult">
+                <input
+                  className="addButton"
+                  type="button"
+                  onClick={this.onClickAdd}
+                  value="Add to List"
+                  name={this.props.book.title}
+                />
+                <input
+                  className="shareButton"
+                  type="button"
+                  onClick={this.onClickShare}
+                  value="Share"
+                  name={this.props.book.title}
+                />
+              </div>
+            )}
           </div>
         </div>
 

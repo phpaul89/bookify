@@ -8,12 +8,55 @@
 }
 
 .imageBookSearchResult {
+  position: relative;
   height: 100%;
-  border-right: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
+  border: 1px solid lightgray;
   display: flex;
   flex-direction: column;
   justify-content: stretch;
+}
+
+.imageBookSearchResult .specialClip {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 36%;
+  height: 26%;
+  background-color: orange;
+  opacity: 0.9;
+  clip-path: polygon(40% 0, 100% 0, 0 100%, 0 40%);
+}
+
+.specialFriend {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  transform: rotate(-45deg);
+  cursor: default;
+  padding-top: 8px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.specialComment {
+  position: absolute;
+  background-color: whitesmoke;
+  border: 1px solid lightgrey;
+  border-radius: 6px;
+  padding: 6px 14px 6px 14px;
+  bottom: 10%;
+  margin: 0 10% 0 10%;
+  font-size: 0.7em;
+  cursor: default;
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(138, 138, 138, 1);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(138, 138, 138, 1);
+  box-shadow: 3px 3px 5px 0px rgba(138, 138, 138, 1);
 }
 
 .contentBookSearchResult {
@@ -27,7 +70,6 @@
 .infoBookSearchResult {
   height: 80%;
   width: 80%;
-  margin-bottom: 10%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -51,6 +93,7 @@
   justify-content: center;
   align-items: center;
   height: 20%;
+  margin-top: 4%;
 }
 
 .chooseListToAddTo {

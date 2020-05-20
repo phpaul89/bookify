@@ -279,6 +279,20 @@ router.post("/getBook", (request, response, next) => {
     });
 });
 
+router.post("/getSpecialBook", (request, response, next) => {
+  //console.log("in backend now");
+  //console.log(request.body.title);
+
+  SpecialBook.find({ title: request.body.title })
+    .then((book) => {
+      response.send(book);
+    })
+    .catch((error) => {
+      console.log("Error finding book: ", error);
+      next();
+    });
+});
+
 router.post("/shareBook", (request, response, next) => {
   console.log(request.body.title);
   console.log(request.body.friend);
