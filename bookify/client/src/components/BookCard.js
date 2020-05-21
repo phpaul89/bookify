@@ -66,10 +66,7 @@ class BookCard extends Component {
     });
 
     return (
-      <div
-        key={this.props.book.isbn}
-        className="allBooksFromSearchResultsThree"
-      >
+      <div className="allBooksFromSearchResultsThree">
         <div className="bookInSearchResultsList">
           <div className="imageBookSearchResult">
             {this.props.book.cover.medium !== undefined ? (

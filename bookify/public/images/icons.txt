@@ -9,3 +9,4 @@ Decline: Freepik
 Delete: Smashicons
 Flag: Freepik
 Interface: Freepik
+No image: via CC wikipedia, source: http://cdn3.crystalcommerce.com/themes/clients/elsewherecomics/assets/img/ui/no-image-available.png?1412807702

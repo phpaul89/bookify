@@ -1,0 +1,47 @@
+.randomBookTile {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.randomFeature {
+  width: 100%;
+  padding: 5% 0 5% 0;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-bottom: 1px solid lightgray;
+  cursor: default;
+}
+
+.randomFeature p {
+  margin: 0;
+  padding: 0;
+  font-size: 0.8em;
+}
+
+.randomBookList {
+  height: 100%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.randomBook {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8em;
+  margin: 8% 0 8% 0;
+  cursor: pointer;
+}

@@ -4,12 +4,14 @@ import Dashboard from "../components/Dashboard.js";
 import RightSidebar from "../components/RightSidebar.js";
 import axios from "axios";
 import "../components/LoggedIn.css";
+import randomJSON from "../components/demo/random.json";
 
 class LoggedIn extends Component {
   state = {
     searchResults: [],
     lists: [],
     suggestedList: [],
+    randomList: [],
   };
 
   componentDidMount = () => {
@@ -17,6 +19,63 @@ class LoggedIn extends Component {
     this.booksFromFollowersList();
     this.getListsFromDb();
     this.getSuggestedBooksFromDb();
+    this.getRandomList();
+  };
+
+  refreshRandomList = (bookTitle) => {
+    this.setState({
+      randomList: [...this.state.randomList].filter(
+        (book) => book.title !== bookTitle
+      ),
+    });
+  };
+
+  getRandomList = () => {
+    console.log("get RandomBooks: ", randomJSON.docs);
+    this.setState({ randomList: randomJSON.docs });
+
+    // axios
+    //   .get("http://openlibrary.org/search.json?author=michael+lewis")
+    //   .then((getRandomBooks) => {
+    //     let length = getRandomBooks.data.docs.length;
+    //     let min = Math.floor(Math.random() * (length - 3));
+    //     let max = min + 3;
+
+    //     console.log(min);
+    //     console.log(max);
+
+    //     const onlyThreeISBN = getRandomBooks.data.docs
+    //       .slice(min, max)
+    //       .map((book) =>
+    //         book.isbn.find((number) => number.toString().length === 13)
+    //       );
+
+    //     for (let isbn of onlyThreeISBN) {
+    //       console.log(isbn);
+    //       axios
+    //         .get(
+    //           `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
+    //         )
+    //         .then((bookJSON) => {
+    //           console.log(bookJSON.data);
+    //           this.setState({
+    //             randomList: [
+    //               ...this.state.randomList,
+    //               {
+    //                 isbn: isbn,
+    //                 title: bookJSON.data[`ISBN:${isbn}`].title,
+    //               },
+    //             ],
+    //           });
+    //         })
+    //         .catch((error) => {
+    //           console.log("Error calling axios at isbn search: ", error);
+    //         });
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log("error axios call: ", error);
+    //   });
   };
 
   booksFromFollowersList = () => {
@@ -116,8 +175,19 @@ class LoggedIn extends Component {
     if (isbn === "reset") {
       this.setState({ searchResults: [] });
     } else {
-      console.log(bookJSON.data[`ISBN:${isbn}`].cover.medium);
+      //console.log(bookJSON.data[`ISBN:${isbn}`].cover.medium);
       console.log(bookJSON.data[`ISBN:${isbn}`]["by_statement"]);
+      let coverCheck = { medium: "" };
+
+      if (bookJSON.data[`ISBN:${isbn}`].cover !== undefined) {
+        coverCheck = bookJSON.data[`ISBN:${isbn}`].cover;
+      } else {
+        coverCheck = {
+          medium: "/images/no-img.png",
+        };
+      }
+
+      console.log(coverCheck);
 
       this.setState({
         // correct way to push into state property array: instead of '.push' using spread operator
@@ -126,7 +196,7 @@ class LoggedIn extends Component {
           {
             isbn: isbn,
             title: bookJSON.data[`ISBN:${isbn}`].title,
-            cover: bookJSON.data[`ISBN:${isbn}`].cover,
+            cover: coverCheck,
             by: bookJSON.data[`ISBN:${isbn}`]["by_statement"],
             year: bookJSON.data[`ISBN:${isbn}`]["publish_date"],
             url: bookJSON.data[`ISBN:${isbn}`].url,
@@ -275,6 +345,9 @@ class LoggedIn extends Component {
             suggestedList={this.state.suggestedList}
             rejectSuggestion={this.rejectSuggestion}
             acceptSuggestion={this.acceptSuggestion}
+            randomList={this.state.randomList}
+            refreshRandomList={this.refreshRandomList}
+            updateSearchResults={this.updateSearchResults}
           />
         </div>
       </div>

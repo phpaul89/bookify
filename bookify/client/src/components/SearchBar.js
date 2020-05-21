@@ -19,7 +19,7 @@ class SearchBar extends Component {
 
     // check for ISBN-13 format
     if (query.length === 13) {
-      console.log("isbn: ", query);
+      //console.log("isbn: ", query);
       let isbn = query;
 
       // make an API call and pass returned JSON and 'isbn' to parent 'Dashboard'
@@ -35,7 +35,7 @@ class SearchBar extends Component {
         });
       // check for text input:
     } else {
-      console.log(query);
+      //console.log(query);
       axios
         .get(`http://openlibrary.org/search.json?title=${query}`)
         .then((booksJSON) => {
@@ -49,13 +49,13 @@ class SearchBar extends Component {
           //console.log(onlyFiveISBN);
 
           for (let isbn of onlyFiveISBN) {
-            console.log(isbn);
+            //console.log(isbn);
             axios
               .get(
                 `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
               )
               .then((bookJSON) => {
-                console.log(bookJSON.data);
+                //console.log(bookJSON.data);
                 this.props.updateSearchResults(bookJSON, isbn);
               })
               .catch((error) => {
@@ -67,20 +67,6 @@ class SearchBar extends Component {
           console.log("error axios call: ", error);
         });
     }
-
-    /*
-    // make an API call and pass returned JSON and 'isbn' to parent 'Dashboard'
-    axios
-      .get(
-        `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
-      )
-      .then((bookJSON) => {
-        this.props.updateSearchResults(bookJSON, isbn);
-      })
-      .catch((error) => {
-        console.log("Error calling axios at inputClick: ", error);
-      });
-      */
   };
 
   render() {
