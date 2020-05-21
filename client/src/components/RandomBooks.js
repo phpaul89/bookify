@@ -4,7 +4,6 @@ import axios from "axios";
 
 class RandomBooks extends Component {
   refreshRandomList = (event) => {
-    //console.log(event.target.getAttribute("title"));
     this.props.updateSearchResults("", "reset");
 
     const bookISBNArr = event.target.getAttribute("isbn");

@@ -4,7 +4,6 @@ import "../components/BookList.css";
 import axios from "axios";
 
 class BookList extends Component {
-  // STATE scenario:
   state = {
     isbnInput: "",
     userBooks: [],
@@ -12,24 +11,18 @@ class BookList extends Component {
   };
 
   inputChange = (event) => {
-    console.log(event.target.value);
     this.setState({ isbnInput: event.target.value });
   };
 
   inputClick = () => {
-    console.log("ISBN from input: ", this.state.isbnInput);
     const isbn = this.state.isbnInput;
 
-    // ADD book to state:
+    // add book to state:
     axios
       .get(
         `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
       )
       .then((bookJSON) => {
-        console.log(bookJSON.data[`ISBN:${isbn}`]);
-        console.log(bookJSON.data[`ISBN:${isbn}`].title);
-        console.log(bookJSON.data[`ISBN:${isbn}`]["publish_date"]);
-        console.log("Current userBooks property: ", this.state.userBooks);
         this.setState({
           // correct way to push into state property array: instead of '.push' using spread operator
           userBooks: [
@@ -43,28 +36,14 @@ class BookList extends Component {
             },
           ],
         });
-        console.log("New userBooks property: ", this.state.userBooks);
       })
       .catch((error) => {
         console.log("Error calling axios: ", error);
       });
   };
 
-  // removeBook = (event) => {
-  //   console.log(event.target.value); // "Remove"
-  //   console.log(event.target.name); // = book title
-
-  //   // it's best practice not to mutate state array directly -> create a new array by '.filter' and assign to state property
-  //   this.setState({
-  //     userBooks: this.state.userBooks.filter((book) => {
-  //       return book.title !== event.target.name;
-  //     }),
-  //   });
-  // };
-
   // delete book from database
   deleteBook = (event) => {
-    // console.log("Target:", event.target);
     axios.delete(`/dashboard/deletebooks/${event.target.name}`);
 
     this.setState({
@@ -75,14 +54,11 @@ class BookList extends Component {
   };
 
   saveBook = (event) => {
-    console.log(event.target.name);
-
     // read: find me the object inside the userBooks state property which matches with the book title of the item i'm clicking on:
     const bookObjectToBeAdded = this.state.userBooks.find((book) => {
       return book.title === event.target.name;
     });
 
-    console.log(bookObjectToBeAdded);
     axios.post("/dashboard/savebook", bookObjectToBeAdded);
   };
 
@@ -96,8 +72,6 @@ class BookList extends Component {
       .get("/dashboard/getbooks")
       .then((allBooksFromDb) => {
         const allBooksData = allBooksFromDb.data;
-        console.log("success getting books from database: ", allBooksData);
-
         this.setState({
           userBooksFromDb: allBooksData,
         });

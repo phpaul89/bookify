@@ -22,13 +22,15 @@ class LoggedIn extends Component {
     this.getRandomList();
   };
 
-  componentWillReceiveProps = (nextProps) => {
+  // deprecated lifecycle method:
+  UNSAFE_componentWillReceiveProps = (nextProps) => {
     console.log(nextProps.user, this.props.user);
     if (
       JSON.stringify(nextProps.user.following) !==
       JSON.stringify(this.props.user)
     ) {
       this.booksFromFollowersList();
+      this.getSuggestedBooksFromDb();
     }
   };
 
@@ -41,57 +43,11 @@ class LoggedIn extends Component {
   };
 
   getRandomList = () => {
-    console.log("get RandomBooks: ", randomJSON.docs);
     this.setState({ randomList: randomJSON.docs });
-
-    // axios
-    //   .get("http://openlibrary.org/search.json?author=michael+lewis")
-    //   .then((getRandomBooks) => {
-    //     let length = getRandomBooks.data.docs.length;
-    //     let min = Math.floor(Math.random() * (length - 3));
-    //     let max = min + 3;
-
-    //     console.log(min);
-    //     console.log(max);
-
-    //     const onlyThreeISBN = getRandomBooks.data.docs
-    //       .slice(min, max)
-    //       .map((book) =>
-    //         book.isbn.find((number) => number.toString().length === 13)
-    //       );
-
-    //     for (let isbn of onlyThreeISBN) {
-    //       console.log(isbn);
-    //       axios
-    //         .get(
-    //           `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
-    //         )
-    //         .then((bookJSON) => {
-    //           console.log(bookJSON.data);
-    //           this.setState({
-    //             randomList: [
-    //               ...this.state.randomList,
-    //               {
-    //                 isbn: isbn,
-    //                 title: bookJSON.data[`ISBN:${isbn}`].title,
-    //               },
-    //             ],
-    //           });
-    //         })
-    //         .catch((error) => {
-    //           console.log("Error calling axios at isbn search: ", error);
-    //         });
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log("error axios call: ", error);
-    //   });
   };
 
   booksFromFollowersList = () => {
     axios.get("/followers/getbooks").then((listOfBooks) => {
-      // console.log("Front end books list", listOfBooks.data.booksFromFollowers);
-      // this.state.searchResults.push(listOfBooks.data.booksFromFollowers);
       this.setState({
         searchResults: listOfBooks.data.booksFromFollowers,
       });
@@ -102,9 +58,7 @@ class LoggedIn extends Component {
     axios
       .get("/dashboard/getUserList")
       .then((listsOfUser) => {
-        //console.log("Success getting lists from database: ", listsOfUser);
         let listDataOfUser = listsOfUser.data;
-        //console.log(listDataOfUser);
         this.setState({ lists: listDataOfUser });
       })
       .catch((error) => {
@@ -113,13 +67,9 @@ class LoggedIn extends Component {
   };
 
   onAddList = (newList) => {
-    //console.log("new list name: ", newList);
-
     axios
       .post("/addList", { name: newList })
       .then((response) => {
-        // response == "done" from backend
-        //console.log("frontend: list added");
         this.getListsFromDb();
       })
       .catch((error) => {
@@ -128,12 +78,10 @@ class LoggedIn extends Component {
   };
 
   getSuggestedBooksFromDb = () => {
-    console.log("getting suggested books now");
     axios
       .get("/getSuggestedBooksList")
       .then((response) => {
         let listDataOfSuggestedBooks = response.data;
-        //console.log("here now", listDataOfSuggestedBooks);
         this.setState({ suggestedList: listDataOfSuggestedBooks });
       })
       .catch((error) => {
@@ -142,8 +90,6 @@ class LoggedIn extends Component {
   };
 
   acceptSuggestion = (title, suggestedBy, comment) => {
-    console.log("accept: ", title, suggestedBy, comment);
-
     axios
       .post("/acceptSuggestion", {
         title: title,
@@ -151,7 +97,6 @@ class LoggedIn extends Component {
         comment: comment,
       })
       .then((response) => {
-        console.log("frontend: added new fav: ", response);
         this.getListsFromDb();
         this.getSuggestedBooksFromDb();
       })
@@ -161,11 +106,6 @@ class LoggedIn extends Component {
   };
 
   rejectSuggestion = (title, suggestedBy, comment) => {
-    console.log("rejecting suggestion now");
-    console.log("Title: ", title);
-    console.log("By: ", suggestedBy);
-    console.log("Comment: ", comment);
-
     axios
       .post("/rejectSuggestion", {
         title: title,
@@ -173,7 +113,6 @@ class LoggedIn extends Component {
         comment: comment,
       })
       .then((response) => {
-        console.log("frontend: suggestion rejected successfully", response);
         this.getSuggestedBooksFromDb();
       })
       .catch((error) => {
@@ -185,8 +124,6 @@ class LoggedIn extends Component {
     if (isbn === "reset") {
       this.setState({ searchResults: [] });
     } else {
-      //console.log(bookJSON.data[`ISBN:${isbn}`].cover.medium);
-      console.log(bookJSON.data[`ISBN:${isbn}`]["by_statement"]);
       let coverCheck = { medium: "" };
 
       if (bookJSON.data[`ISBN:${isbn}`].cover !== undefined) {
@@ -196,8 +133,6 @@ class LoggedIn extends Component {
           medium: "/images/no-img.png",
         };
       }
-
-      console.log(coverCheck);
 
       this.setState({
         // correct way to push into state property array: instead of '.push' using spread operator
@@ -220,9 +155,7 @@ class LoggedIn extends Component {
     axios
       .post("/getFollowers")
       .then((response) => {
-        //console.log(response);
         const followersFromDb = response.data;
-        console.log("got this followers from database: ", followersFromDb);
         this.setState({
           //searchResults: [...this.state.searchResults, ...bookFromDb], **works
           searchResults: followersFromDb,
@@ -234,23 +167,14 @@ class LoggedIn extends Component {
   };
 
   onSaveToList = (listName, bookTitle) => {
-    //console.log("from LoggedIn component");
-    console.log("frontend: book title: ", bookTitle);
-    console.log("frontend: list name: ", listName);
-
-    console.log(this.state.searchResults);
-
     const bookToList = this.state.searchResults.find((book) => {
       return book.title === bookTitle;
     });
-
-    console.log("frontend: book to save: ", bookToList);
 
     // maybe remove from state after saving to list with '.then'
     axios
       .post("/dashboard/saveToList", { book: bookToList, list: listName })
       .then((flag) => {
-        //console.log("updating list: ", flag);
         this.getListsFromDb();
       })
       .catch((error) => {
@@ -259,19 +183,12 @@ class LoggedIn extends Component {
   };
 
   onClickListItem = (bookTitle, listName) => {
-    console.log(listName);
-    //console.log("In LoggedIn component, book title: ", bookTitle);
-    // .post needed somehow, .get doesn't work for passing variable
-
     if (listName !== "Special") {
       axios
         .post("/getBook", { title: bookTitle })
         .then((response) => {
-          //console.log(response);
           const bookFromDb = response.data;
-          console.log("got this book from database: ", bookFromDb);
           this.setState({
-            //searchResults: [...this.state.searchResults, ...bookFromDb], **works
             searchResults: bookFromDb,
           });
         })
@@ -282,11 +199,8 @@ class LoggedIn extends Component {
       axios
         .post("/getSpecialBook", { title: bookTitle })
         .then((response) => {
-          //console.log(response);
           const bookFromDb = response.data;
-          console.log("got this book from database: ", bookFromDb);
           this.setState({
-            //searchResults: [...this.state.searchResults, ...bookFromDb], **works
             searchResults: bookFromDb,
           });
         })
@@ -297,7 +211,6 @@ class LoggedIn extends Component {
   };
 
   onShareBook = (comment, friend, bookTitle) => {
-    //console.log("book to share: ", bookTitle);
     axios
       .post("/shareBook", {
         title: bookTitle,
@@ -305,7 +218,6 @@ class LoggedIn extends Component {
         comment: comment,
       })
       .then((response) => {
-        console.log("response from backend: ", response.data);
         if (response.data === "Success") {
           console.log("Book shared successfully!");
         } else if (response.data === "Failure") {
@@ -323,7 +235,6 @@ class LoggedIn extends Component {
     axios
       .post("/deleteBookFromList", { book: bookTitle, list: listName })
       .then((response) => {
-        console.log("frontend: removed book from list");
         this.getListsFromDb();
       })
       .catch((error) => {
@@ -335,8 +246,6 @@ class LoggedIn extends Component {
     axios
       .post("/deleteList", { name: delList })
       .then((response) => {
-        // response == "done" from backend
-        //console.log("frontend: list added");
         this.getListsFromDb();
       })
       .catch((error) => {
@@ -348,10 +257,6 @@ class LoggedIn extends Component {
     axios
       .post("/removeFollower", { name: followerName })
       .then((response) => {
-        console.log("test");
-        // please God forgive me for this because of presentation deadline (RIP Phillip's honor):
-        //window.location.reload(true);
-        console.log("here right now: ", response.data);
         this.props.setUser(response.data);
       })
       .catch((error) => {
@@ -381,6 +286,7 @@ class LoggedIn extends Component {
             onClickShareBook={this.onShareBook}
             lists={this.state.lists}
             onClickRemoveFollower={this.onClickRemoveFollower}
+            user={this.props.user}
           />
 
           <RightSidebar

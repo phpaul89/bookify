@@ -22,13 +22,10 @@ class BookCard extends Component {
   };
 
   onClickSave = (event) => {
-    console.log(event.target.innerHTML, this.props.book.title);
     this.props.onSaveToList(event.target.innerHTML, this.props.book.title);
   };
 
-  onClickShare = (event) => {
-    console.log(this.props.book);
-
+  onClickShare = () => {
     axios
       .post("/saveBookWhenClickShare", { book: this.props.book })
       .then((response) => {
@@ -43,26 +40,26 @@ class BookCard extends Component {
   };
 
   onCommentInputChange = (event) => {
-    console.log(event.target.value);
     this.setState({ comment: event.target.value });
   };
 
   onFriendInputChange = (event) => {
-    console.log(event.target.value);
     this.setState({ friend: event.target.value });
   };
 
   onClickSend = () => {
-    console.log(this.state.comment, this.state.friend, this.props.book.title);
-
-    this.props.onClickShareBook(
-      this.state.comment,
-      this.state.friend,
-      this.props.book.title
-    );
-    document.getElementById("commentInput").value = "";
-    document.getElementById("friendInput").value = "";
-    this.setState({ comment: "", friend: "" });
+    if (this.state.friend !== this.props.user.username) {
+      this.props.onClickShareBook(
+        this.state.comment,
+        this.state.friend,
+        this.props.book.title
+      );
+      document.getElementById("commentInput").value = "";
+      document.getElementById("friendInput").value = "";
+      this.setState({ comment: "", friend: "" });
+    } else {
+      console.log("cannot share book with oneself");
+    }
   };
 
   render() {

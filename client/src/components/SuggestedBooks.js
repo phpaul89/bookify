@@ -11,8 +11,6 @@ class SuggestedBooks extends Component {
   };
 
   acceptSuggestion = (event) => {
-    console.log("accept suggested book");
-
     this.props.acceptSuggestion(
       event.target.getAttribute("title"),
       event.target.getAttribute("suggestedby"),
@@ -21,10 +19,6 @@ class SuggestedBooks extends Component {
   };
 
   rejectSuggestion = (event) => {
-    console.log("Title: ", event.target.getAttribute("title"));
-    console.log("By: ", event.target.getAttribute("suggestedby"));
-    console.log("Comment: ", event.target.getAttribute("comment"));
-
     this.props.rejectSuggestion(
       event.target.getAttribute("title"),
       event.target.getAttribute("suggestedby"),
