@@ -30,6 +30,51 @@ router.delete("/dashboard/deletebooks/:title", (request, response) => {
   Book.findOneAndDelete(request.params.title);
 });
 
+router.post("/saveBookWhenClickShare", (request, response, next) => {
+  console.log(request.body.book);
+
+  // destructuring: if variables is not passed by API -> initialized with 'undefined'
+  const {
+    isbn,
+    title,
+    cover,
+    by_statement,
+    publish_date,
+    url,
+  } = request.body.book;
+
+  // Step 1 of 2: Check by book title if Book is already existing in database, if not -> create Book:
+  Book.findOne({ title: title })
+    .then((bookExists) => {
+      if (bookExists != null) {
+        response.send("book exists already, go on in frontend");
+        return;
+      } else {
+        Book.create({
+          isbn: isbn,
+          title: title,
+          by: by_statement,
+          year: publish_date,
+          cover: cover,
+          url: url,
+        })
+          .then((bookCreated) => {
+            console.log("successfully created book: ", bookCreated);
+            response.send("created book, go on in frontend");
+            return;
+          })
+          .catch((error) => {
+            console.log(error);
+            next();
+          });
+      }
+    })
+    .catch((error) => {
+      console.log("Error finding book: ", error);
+      next();
+    });
+});
+
 router.post("/dashboard/saveToList", (request, response, next) => {
   // destructuring: if variables is not passed by API -> initialized with 'undefined'
   const {

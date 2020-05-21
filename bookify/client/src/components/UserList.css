@@ -71,6 +71,7 @@
   width: 74%;
   padding: 0;
   margin: 5% 0 5% 0;
+  font-size: 0.8em;
 }
 
 .specialListName {
@@ -125,6 +126,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  font-size: 0.8em;
 }
 
 .deleteBookFromList {

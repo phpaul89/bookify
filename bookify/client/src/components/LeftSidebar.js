@@ -1,29 +1,20 @@
 import React, { Component } from "react";
 import UserList from "../components/UserList.js";
 import "../components/LeftSidebar.css";
+import UserInfo from "../components/UserInfo.js";
 
 class LeftSidebar extends Component {
   render() {
-    const user = this.props.user;
-
     return (
       <div className="left-sidebar">
         <div className="left-section-user-panel">
-          {/* {console.log(
-            "Users left side:",
-            new Date(user.createdAt).toDateString().slice(4)
-          )} */}
-          <img src="/images/summer.png" className="left-section-img" alt="" />
-          <div className="user-info">
-            {user.username}
-            <br />
-            Following: {user.following.length}
-            <br />
-            Member of Bookfy since{" "}
-            {new Date(user.createdAt).toDateString().slice(4)}
-          </div>
+          <UserInfo
+            user={this.props.user}
+            onClickFollowing={this.props.onClickFollowing}
+          />
         </div>
         <div className="left-section-list">
+          <div className="left-section-list-header">Your lists</div>
           <UserList
             lists={this.props.lists}
             onClickListItem={this.props.onClickListItem}

@@ -216,6 +216,23 @@ class LoggedIn extends Component {
     }
   };
 
+  onClickFollowing = () => {
+    axios
+      .post("/getFollowers")
+      .then((response) => {
+        //console.log(response);
+        const followersFromDb = response.data;
+        console.log("got this followers from database: ", followersFromDb);
+        this.setState({
+          //searchResults: [...this.state.searchResults, ...bookFromDb], **works
+          searchResults: followersFromDb,
+        });
+      })
+      .catch((error) => {
+        console.log("Error at onClickFollowing: ", error);
+      });
+  };
+
   onSaveToList = (listName, bookTitle) => {
     //console.log("from LoggedIn component");
     console.log("frontend: book title: ", bookTitle);
@@ -327,6 +344,21 @@ class LoggedIn extends Component {
       });
   };
 
+  onClickRemoveFollower = (followerName) => {
+    axios
+      .post("/removeFollower", { name: followerName })
+      .then((response) => {
+        console.log("test");
+        // please God forgive me for this because of presentation deadline (RIP Phillip's honor):
+        //window.location.reload(true);
+        console.log("here right now: ", response.data);
+        this.props.setUser(response.data);
+      })
+      .catch((error) => {
+        console.log("Error at removing follower: ", error);
+      });
+  };
+
   render() {
     return (
       <div className="loggedin-main-div">
@@ -339,6 +371,7 @@ class LoggedIn extends Component {
             user={this.props.user}
             setUser={this.props.setUser}
             onDeleteList={this.onDeleteList}
+            onClickFollowing={this.onClickFollowing}
           />
 
           <Dashboard
@@ -347,6 +380,7 @@ class LoggedIn extends Component {
             onSaveToList={this.onSaveToList}
             onClickShareBook={this.onShareBook}
             lists={this.state.lists}
+            onClickRemoveFollower={this.onClickRemoveFollower}
           />
 
           <RightSidebar

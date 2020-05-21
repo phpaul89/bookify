@@ -1,21 +1,33 @@
 import React, { Component } from "react";
 import "../components/SearchResults.css";
 import BookCard from "../components/BookCard.js";
+import FollowerCard from "../components/FollowerCard.js";
 
 class SearchResults extends Component {
   render() {
     console.log(this.props.searchResults);
     const searchResultsList = this.props.searchResults.map((book) => {
-      return (
-        <div key={book.isbn}>
-          <BookCard
-            book={book}
-            lists={this.props.lists}
-            onSaveToList={this.props.onSaveToList}
-            onClickShareBook={this.props.onClickShareBook}
-          />
-        </div>
-      );
+      if (book.avatar === undefined) {
+        return (
+          <div className="bookCard-wrapper" key={book.isbn}>
+            <BookCard
+              book={book}
+              lists={this.props.lists}
+              onSaveToList={this.props.onSaveToList}
+              onClickShareBook={this.props.onClickShareBook}
+            />
+          </div>
+        );
+      } else {
+        return (
+          <div key={book.username}>
+            <FollowerCard
+              user={book}
+              onClickRemoveFollower={this.props.onClickRemoveFollower}
+            />
+          </div>
+        );
+      }
     });
 
     return searchResultsList.length === 0 ? (

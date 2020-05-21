@@ -8,6 +8,7 @@ const userSchema = new Schema(
     //lists: [{ type: Schema.Types.ObjectID, ref: "List" }], // not needed right now -> list has 'owner' property
     suggestedBooks: [{ type: Schema.Types.ObjectId, ref: "SuggestedBook" }],
     following: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    avatar: String,
   },
   {
     timestamps: true,

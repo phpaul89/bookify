@@ -3,8 +3,19 @@
   opacity: 0.8;
   height: 12px;
   width: 14px;
+  cursor: pointer;
 }
 
 .add-follower-div-img {
   display: flex;
+}
+
+.follower-group {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 0.8em;
+  padding: 0 14px 0 14px;
 }
