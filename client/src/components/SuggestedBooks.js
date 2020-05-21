@@ -55,7 +55,11 @@ class SuggestedBooks extends Component {
       return (
         <div className="bookInSuggestedList">
           <div className="suggestedImage">
-            <img src={suggestedBook.cover.medium} alt="" />
+            <img
+              src={suggestedBook.cover.medium}
+              alt=""
+              className="suggestedCover"
+            />
             <img
               src="/images/arrow-left.png"
               className="previous"

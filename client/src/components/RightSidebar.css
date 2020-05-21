@@ -1,5 +1,5 @@
 .right-sidebar {
-  width: 20%;
+  min-width: 10%;
 }
 
 .right-section {
