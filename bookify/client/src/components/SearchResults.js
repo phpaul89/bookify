@@ -4,7 +4,7 @@ import BookCard from "../components/BookCard.js";
 
 class SearchResults extends Component {
   render() {
-    //console.log(this.props.searchResults);
+    console.log(this.props.searchResults);
     const searchResultsList = this.props.searchResults.map((book) => {
       return (
         <div key={book.isbn}>

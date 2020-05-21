@@ -14,12 +14,14 @@ class LeftSidebar extends Component {
             new Date(user.createdAt).toDateString().slice(4)
           )} */}
           <img src="/images/summer.png" className="left-section-img" alt="" />
-          {user.username}
-          <br />
-          Following: {user.following.length}
-          <br />
-          Member of Bookfy since{" "}
-          {new Date(user.createdAt).toDateString().slice(4)}
+          <div className="user-info">
+            {user.username}
+            <br />
+            Following: {user.following.length}
+            <br />
+            Member of Bookfy since{" "}
+            {new Date(user.createdAt).toDateString().slice(4)}
+          </div>
         </div>
         <div className="left-section-list">
           <UserList
