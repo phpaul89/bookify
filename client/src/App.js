@@ -47,12 +47,6 @@ class App extends Component {
             );
           }}
         />
-        <footer>
-          <div>
-            2020 Ironhack WebDev Final Project | Brought to life by the awesome
-            Marcia Furtado and Phillip Paul
-          </div>
-        </footer>
       </div>
     );
   }
