@@ -13,26 +13,22 @@ const Navbar = (props) => {
   return (
     <nav className="navbar-dummy">
       <div className="navbar-logo">
-        <div className="logo-group">
+        <div className="logo-home">
           <img src="/images/book-icon-ed.png" alt="logo-bookify" />
-          <p>bookify</p>
+          <p>Bookify</p>
         </div>
       </div>
       <div className="navbar-panel">
-        <Link to="/">Home</Link>
         {props.user && <p>Hello {props.user.username}</p>}
         {props.user ? (
           <>
-            <Link to="/profile">My profile</Link>
+            <Link to="/">Home</Link>
             <Link to="/" onClick={() => handleLogout(props)}>
               Logout
             </Link>
           </>
         ) : (
-          <>
-            <Link to="/signup">Signup</Link>
-            <Link to="/login">Login</Link>
-          </>
+          <>{false}</>
         )}
       </div>
     </nav>

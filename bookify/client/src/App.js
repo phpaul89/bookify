@@ -26,23 +26,33 @@ class App extends Component {
           path="/signup"
           render={(props) => <Signup setUser={this.setUser} {...props} />}
         />
-        <Route
+        {/* <Route
           exact
           path="/login"
           render={(props) => <Login setUser={this.setUser} {...props} />}
-        />
+        /> */}
 
         <Route
           exact
           path="/"
           render={(props) => {
-            return this.state.user !== null ? (
+            return this.state.user ? (
               <LoggedIn user={this.state.user} setUser={this.setUser} />
             ) : (
-              <div>Please login</div>
+              <Route
+                exact
+                path="/"
+                render={(props) => <Login setUser={this.setUser} {...props} />}
+              />
             );
           }}
         />
+        <footer>
+          <div>
+            2020 Ironhack WebDev Final Project | Brought to life by the awesome
+            Marcia Furtado and Phillip Paul
+          </div>
+        </footer>
       </div>
     );
   }

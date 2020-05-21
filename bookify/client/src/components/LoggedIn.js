@@ -319,7 +319,7 @@ class LoggedIn extends Component {
 
   render() {
     return (
-      <div className="app">
+      <div className="loggedin-main-div">
         <div className="main-wrapper">
           <LeftSidebar
             lists={this.state.lists}

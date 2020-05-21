@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { signup } from "../services/auth";
+import "./Signup.css";
 
 class Signup extends Component {
   state = {
@@ -38,33 +39,45 @@ class Signup extends Component {
 
   render() {
     return (
-      <div>
-        <h2>Signup</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label htmlFor="username">Username: </label>
-            <input
-              type="text"
-              name="username"
-              value={this.state.username}
-              onChange={this.handleChange}
-              id="username"
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password: </label>
-            <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-              id="password"
-            />
-          </div>
-          {this.state.message && <div>{this.state.message}</div>}
-          <br />
-          <button type="submit">Signup</button>
-        </form>
+      <div className="signup-main-section">
+        <div className="text-signup">
+          <p>Create an account and start sharing books</p>
+        </div>
+        <div className="signup-section">
+          <h2 className="title">Signup</h2>
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <label htmlFor="username" />
+              <input
+                type="text"
+                name="username"
+                value={this.state.username}
+                onChange={this.handleChange}
+                id="username"
+                placeholder="Username"
+              />
+            </div>
+            <div>
+              <label htmlFor="password" />
+              <input
+                type="password"
+                name="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+                id="password"
+                placeholder="Password"
+              />
+            </div>
+            {this.state.message && <div>{this.state.message}</div>}
+            <br />
+            <button type="submit" className="signup-btn">
+              Signup
+            </button>
+          </form>
+        </div>
+        <p className="text-color">
+          Already have an account? <a href="/">Login</a>
+        </p>
       </div>
     );
   }
