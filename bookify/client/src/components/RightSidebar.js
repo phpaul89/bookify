@@ -22,7 +22,7 @@ class RightSidebar extends Component {
             updateSearchResults={this.props.updateSearchResults}
           />
         </div>
-        <div className="right-section">
+        <div className="follow-title">
           <SuggestedUsers user={this.props.user} setUser={this.props.setUser} />
         </div>
       </div>
