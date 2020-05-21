@@ -340,7 +340,9 @@ class LoggedIn extends Component {
       .then((response) => {
         console.log("test");
         // please God forgive me for this because of presentation deadline (RIP Phillip's honor):
-        window.location.reload(true);
+        //window.location.reload(true);
+        console.log("here right now: ", response.data);
+        this.props.setUser(response.data);
       })
       .catch((error) => {
         console.log("Error at removing follower: ", error);

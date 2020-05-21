@@ -92,7 +92,9 @@ router.post("/removeFollower", (request, response, next) => {
       )
         .then((success) => {
           console.log("success?: ", success);
-          response.send("success");
+          User.findById(request.user._id).then((updatedUser) => {
+            response.send(updatedUser);
+          });
         })
         .catch((error) => {
           console.log("Error at updating follower array: ", error);
