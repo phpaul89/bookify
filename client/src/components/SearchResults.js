@@ -5,24 +5,24 @@ import FollowerCard from "../components/FollowerCard.js";
 
 class SearchResults extends Component {
   render() {
-    console.log(this.props.searchResults);
-    const searchResultsList = this.props.searchResults.map((book) => {
-      if (book.avatar === undefined) {
+    const searchResultsList = this.props.searchResults.map((item) => {
+      if (item.avatar === undefined) {
         return (
-          <div className="bookCard-wrapper" key={book.isbn}>
+          <div className="bookCard-wrapper" key={item.isbn}>
             <BookCard
-              book={book}
+              book={item}
               lists={this.props.lists}
               onSaveToList={this.props.onSaveToList}
               onClickShareBook={this.props.onClickShareBook}
+              user={this.props.user}
             />
           </div>
         );
       } else {
         return (
-          <div key={book.username}>
+          <div key={item.username}>
             <FollowerCard
-              user={book}
+              user={item}
               onClickRemoveFollower={this.props.onClickRemoveFollower}
             />
           </div>

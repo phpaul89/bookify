@@ -10,7 +10,6 @@ class Users extends Component {
 
   componentDidMount() {
     axios.get("/users").then((res) => {
-      //   console.log("Response:", res.data);
       this.setState({
         users: res.data.users,
       });
@@ -18,9 +17,7 @@ class Users extends Component {
   }
 
   followUser = (userId) => {
-    console.log("UserId", userId);
     axios.post(`/follow/${userId}`).then((res) => {
-      //   console.log("Response:", res.data);
       this.props.setUser(res.data);
       this.setState({
         loggedIn: res.data,
@@ -29,7 +26,6 @@ class Users extends Component {
   };
 
   render() {
-    //console.log(this.state.loggedIn, this.props.user);
     const filterUsers = this.state.users
       .filter((user) => {
         return (
@@ -40,7 +36,6 @@ class Users extends Component {
       .slice(0, 5);
 
     const usersList = filterUsers.map((user) => {
-      // console.log("User list:", user);
       return (
         <div key={user._id} className="follower-group">
           <div className="add-follower-div-img">
@@ -57,7 +52,6 @@ class Users extends Component {
       );
     });
 
-    // console.log(this.props);
     return <div>{usersList}</div>;
   }
 }

@@ -6,8 +6,6 @@ const passport = require("passport");
 
 router.post("/signup", (req, res) => {
   const { username, password } = req.body;
-  console.log("signup in backend now with: ", username);
-
   const avatarDummy = [
     "/images/summer.png",
     "/images/morty.jpeg",
@@ -17,7 +15,6 @@ router.post("/signup", (req, res) => {
   ];
   const randomAvatar =
     avatarDummy[Math.floor(Math.random() * avatarDummy.length)];
-  console.log("your avatar: ", randomAvatar);
 
   if (!username) {
     return res.status(400).json({ message: "Your username cannot be empty" });

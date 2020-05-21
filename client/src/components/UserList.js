@@ -19,7 +19,6 @@ class UserList extends Component {
   // list should toggle between hiding/showing list books
   // add/remove toggled lists to state 'activeLists' for conditional rendering
   clickList = (event) => {
-    //console.log(this.props.lists);
     // .getAttribute("name") here instead of .name!
     const checkActive = this.state.activeLists.includes(
       event.target.getAttribute("name")
@@ -68,8 +67,6 @@ class UserList extends Component {
   };
 
   onClickDelFromList = (event) => {
-    console.log(event.target.getAttribute("book"));
-    console.log(event.target.getAttribute("list"));
     this.props.onDeleteBookFromList(
       event.target.getAttribute("book"),
       event.target.getAttribute("list")
@@ -77,12 +74,10 @@ class UserList extends Component {
   };
 
   onBtnSearch = () => {
-    console.log("search button clicked");
     this.setState({ activeSearch: !this.state.activeSearch });
   };
 
   onInputChange = (event) => {
-    console.log(event.target.value);
     this.setState({ addListQuery: event.target.value });
   };
 
@@ -93,7 +88,6 @@ class UserList extends Component {
   };
 
   onClickDeleteList = (event) => {
-    console.log("Delete: ", event.target.getAttribute("name"));
     this.props.onDeleteList(event.target.getAttribute("name"));
     const newActiveLists = this.state.activeEditLists.filter(
       (list) => list !== event.target.getAttribute("name")

@@ -3,7 +3,6 @@ import "../components/UserInfo.css";
 
 class UserInfo extends Component {
   onClickFollowing = (event) => {
-    console.log("looking for followers");
     const checkEmpty = event.target.innerHTML.toString();
 
     if (checkEmpty !== "0") {

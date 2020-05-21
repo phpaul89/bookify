@@ -17,6 +17,7 @@ class Dashboard extends Component {
             onClickShareBook={this.props.onClickShareBook}
             lists={this.props.lists}
             onClickRemoveFollower={this.props.onClickRemoveFollower}
+            user={this.props.user}
           />
         </div>
       </div>

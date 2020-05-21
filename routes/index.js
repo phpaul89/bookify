@@ -7,11 +7,6 @@ const User = require("../models/User.js");
 const SuggestedBook = require("../models/SuggestedBook-model.js");
 const SpecialBook = require("../models/SpecialBook-model.js");
 
-/* GET home page */
-// router.get("/", (req, res, next) => {
-//   res.render("index");
-// });
-
 // custom routes, will be split into route files later:
 
 router.get("/dashboard/getbooks", (request, response) => {
@@ -20,19 +15,19 @@ router.get("/dashboard/getbooks", (request, response) => {
       response.send(allBooksFromDb);
     })
     .catch((error) => {
-      console.log("error getting books from database in backend: ", error);
+      console.log(
+        "backend: error getting books from database in backend: ",
+        error
+      );
       next();
     });
 });
 
 router.delete("/dashboard/deletebooks/:title", (request, response) => {
-  // console.log("parameter", request.params);
   Book.findOneAndDelete(request.params.title);
 });
 
 router.post("/saveBookWhenClickShare", (request, response, next) => {
-  console.log(request.body.book);
-
   // destructuring: if variables is not passed by API -> initialized with 'undefined'
   const {
     isbn,
@@ -47,7 +42,7 @@ router.post("/saveBookWhenClickShare", (request, response, next) => {
   Book.findOne({ title: title })
     .then((bookExists) => {
       if (bookExists != null) {
-        response.send("book exists already, go on in frontend");
+        response.send("backend: book exists already, go on in frontend");
         return;
       } else {
         Book.create({
@@ -59,8 +54,8 @@ router.post("/saveBookWhenClickShare", (request, response, next) => {
           url: url,
         })
           .then((bookCreated) => {
-            console.log("successfully created book: ", bookCreated);
-            response.send("created book, go on in frontend");
+            console.log("backend: successfully created book: ", bookCreated);
+            response.send("backend: created book, go on in frontend");
             return;
           })
           .catch((error) => {
@@ -70,7 +65,7 @@ router.post("/saveBookWhenClickShare", (request, response, next) => {
       }
     })
     .catch((error) => {
-      console.log("Error finding book: ", error);
+      console.log("backend: Error finding book: ", error);
       next();
     });
 });
@@ -87,14 +82,11 @@ router.post("/dashboard/saveToList", (request, response, next) => {
   } = request.body.book;
   const listName = request.body.list;
 
-  //console.log("Title in backend: ", title);
-  //console.log("List in backend: ", listName);
-
   // Step 1 of 2: Check by book title if Book is already existing in database, if not -> create Book:
   Book.findOne({ title: title })
     .then((bookExists) => {
       if (bookExists != null) {
-        console.log("Book exists already, checking for List now");
+        console.log("backend: Book exists already, checking for List now");
         return;
       } else {
         Book.create({
@@ -106,7 +98,7 @@ router.post("/dashboard/saveToList", (request, response, next) => {
           url: url,
         })
           .then((bookCreated) => {
-            console.log("successfully created book: ", bookCreated);
+            console.log("backend: successfully created book: ", bookCreated);
           })
           .catch((error) => {
             console.log(error);
@@ -115,7 +107,7 @@ router.post("/dashboard/saveToList", (request, response, next) => {
       }
     })
     .catch((error) => {
-      console.log("Error finding book: ", error);
+      console.log("backend: Error finding book: ", error);
       next();
     });
 
@@ -123,11 +115,11 @@ router.post("/dashboard/saveToList", (request, response, next) => {
   List.findOne({ name: listName, owner: request.user._id })
     .then((listExists) => {
       if (listExists != null) {
-        console.log("List found");
+        console.log("backend: List found");
 
         Book.findOne({ title: title })
           .then((bookExists) => {
-            console.log("returned value for book: ", bookExists);
+            console.log("backend: returned value for book: ", bookExists);
             List.findOne({
               name: listName,
               owner: request.user._id,
@@ -135,7 +127,7 @@ router.post("/dashboard/saveToList", (request, response, next) => {
             })
               .then((listOfUserWithBookExists) => {
                 if (listOfUserWithBookExists != null) {
-                  console.log("Book exists already in this List");
+                  console.log("backend: Book exists already in this List");
                   return;
                 } else {
                   List.updateOne(
@@ -143,24 +135,26 @@ router.post("/dashboard/saveToList", (request, response, next) => {
                     { $push: { books: bookExists } }
                   )
                     .then((listUpdated) => {
-                      console.log("List got updated: ", listUpdated);
-                      // response needed to execute '.then()' in frontend:
+                      console.log("backend: List got updated: ", listUpdated);
                       response.send("done");
                       return;
                     })
                     .catch((error) => {
-                      console.log("Error updating List: ", error);
+                      console.log("backend: Error updating List: ", error);
                       next();
                     });
                 }
               })
               .catch((error) => {
-                console.log("Error finding book in user list: ", error);
+                console.log(
+                  "backend: Error finding book in user list: ",
+                  error
+                );
                 next();
               });
           })
           .catch((error) => {
-            console.log("Error finding Book: ", error);
+            console.log("backend: Error finding Book: ", error);
             next();
           });
       } else {
@@ -170,7 +164,7 @@ router.post("/dashboard/saveToList", (request, response, next) => {
           books: [],
         })
           .then((newList) => {
-            console.log("New list created: ", newList);
+            console.log("backend: New list created: ", newList);
             Book.findOne({ title: title })
               .then((bookExists) => {
                 List.updateOne(
@@ -178,29 +172,28 @@ router.post("/dashboard/saveToList", (request, response, next) => {
                   { $push: { books: bookExists } }
                 )
                   .then((listUpdated) => {
-                    console.log("List got updated: ", listUpdated);
-                    // response needed to execute '.then()' in frontend:
+                    console.log("backend: List got updated: ", listUpdated);
                     response.send("done");
                     return;
                   })
                   .catch((error) => {
-                    console.log("Error updating List: ", error);
+                    console.log("backend: Error updating List: ", error);
                     next();
                   });
               })
               .catch((error) => {
-                console.log("Error finding Book: ", error);
+                console.log("backend: Error finding Book: ", error);
                 next();
               });
           })
           .catch((error) => {
-            console.log("Error creating List: ", error);
+            console.log("backend: Error creating List: ", error);
             next();
           });
       }
     })
     .catch((error) => {
-      console.log("Error finding List: ", error);
+      console.log("backend: Error finding List: ", error);
       next();
     });
 });
@@ -214,13 +207,12 @@ router.get("/dashboard/getUserList", (request, response, next) => {
       response.send(allListsOfUser);
     })
     .catch((error) => {
-      console.log("Error getting all lists of user: ", error);
+      console.log("backend: Error getting all lists of user: ", error);
       next();
     });
 });
 
 router.post("/addList", (request, response, next) => {
-  //console.log(request.body.name);
   List.findOne({ name: request.body.name, owner: request.user._id })
     .then((listExists) => {
       if (listExists !== null) {
@@ -236,7 +228,7 @@ router.post("/addList", (request, response, next) => {
             response.send("done");
           })
           .catch((error) => {
-            console.log("Error at creating new list ", error);
+            console.log("backend: Error at creating new list ", error);
             next();
           });
       }
@@ -254,42 +246,39 @@ router.post("/deleteList", (request, response, next) => {
       response.send("done");
     })
     .catch((error) => {
-      console.log("Error deleting list: ", error);
+      console.log("backend: Error deleting list: ", error);
       next();
     });
 });
 
 router.post("/deleteBookFromList", (request, response, next) => {
   const { book, list } = request.body;
-  console.log("in backend: ", book, list);
 
   if (list == "Special") {
     SpecialBook.findOne({ title: book })
       .then((bookObject) => {
-        console.log("found book: ", bookObject);
-        console.log("id of found book: ", bookObject._id);
+        console.log("backend: found book: ", bookObject);
         List.updateOne(
           { owner: request.user._id, name: list },
           { $pull: { special: bookObject._id } }
         )
           .then((list) => {
-            console.log("Book removed from List: ", list);
+            console.log("backend: Book removed from List: ", list);
             response.send("done");
           })
           .catch((error) => {
-            console.log("Error removing book from list: ", error);
+            console.log("backend: Error removing book from list: ", error);
             next();
           });
       })
       .catch((error) => {
-        console.log("Error finding book: ", error);
+        console.log("backend: Error finding book: ", error);
         next();
       });
   } else {
     Book.findOne({ title: book })
       .then((bookObject) => {
-        //console.log("found book: ", bookObject);
-        //console.log("id of found book: ", bookObject._id);
+        console.log("backend: found book: ", bookObject);
         List.updateOne(
           { owner: request.user._id, name: list },
           { $pull: { books: bookObject._id } }
@@ -299,52 +288,43 @@ router.post("/deleteBookFromList", (request, response, next) => {
             response.send("done");
           })
           .catch((error) => {
-            console.log("Error removing book from list: ", error);
+            console.log("backend: Error removing book from list: ", error);
             next();
           });
       })
       .catch((error) => {
-        console.log("Error finding book: ", error);
+        console.log("backend: Error finding book: ", error);
         next();
       });
   }
 });
 
 router.post("/getBook", (request, response, next) => {
-  //console.log("in backend now");
-  //console.log(request.body.title);
-
   Book.find({ title: request.body.title })
     .then((book) => {
       response.send(book);
     })
     .catch((error) => {
-      console.log("Error finding book: ", error);
+      console.log("backend: Error finding book: ", error);
       next();
     });
 });
 
 router.post("/getSpecialBook", (request, response, next) => {
-  //console.log("in backend now");
-  //console.log(request.body.title);
-
   SpecialBook.find({ title: request.body.title })
     .then((book) => {
       response.send(book);
     })
     .catch((error) => {
-      console.log("Error finding book: ", error);
+      console.log("backend: Error finding book: ", error);
       next();
     });
 });
 
 router.post("/shareBook", (request, response, next) => {
-  console.log(request.body.title);
-  console.log(request.body.friend);
-
   Book.findOne({ title: request.body.title })
     .then((book) => {
-      console.log("find book: ", book);
+      console.log("backend: found book: ", book);
       SuggestedBook.create({
         isbn: book.isbn,
         title: book.title,
@@ -356,7 +336,7 @@ router.post("/shareBook", (request, response, next) => {
         comment: request.body.comment,
       })
         .then((suggestedBook) => {
-          console.log("creating suggested book: ", suggestedBook);
+          console.log("backend: creating suggested book: ", suggestedBook);
           User.findOneAndUpdate(
             { username: request.body.friend },
             { $push: { suggestedBooks: suggestedBook } }
@@ -364,35 +344,33 @@ router.post("/shareBook", (request, response, next) => {
             .populate("suggestedBooks")
             .then((updated) => {
               if (updated != null) {
-                console.log("Book successfully shared: ", updated);
+                console.log("backend: Book successfully shared: ", updated);
                 response.send("Success");
               } else {
-                console.log("User not found!: ", updated);
+                console.log("backend: User not found!: ", updated);
                 response.send("Failure");
               }
             })
             .catch((error) => {
-              console.log("Error at updating user: ", error);
+              console.log("backend: Error at updating user: ", error);
               next();
             });
         })
         .catch((error) => {
-          console.log("Error at creating suggestedBook: ", error);
+          console.log("backend: Error at creating suggestedBook: ", error);
           next();
         });
     })
     .catch((error) => {
-      console.log("Error at finding book: ", error);
+      console.log("backend: Error at finding book: ", error);
       next();
     });
 });
 
 router.get("/getSuggestedBooksList", (request, response, next) => {
-  console.log("backend: /getSuggestedBooksList");
   User.findOne({ _id: request.user._id })
     .populate("suggestedBooks")
     .then((user) => {
-      // console.log(user.suggestedBooks);
       response.send(user.suggestedBooks);
     })
     .catch((error) => {
@@ -404,8 +382,6 @@ router.get("/getSuggestedBooksList", (request, response, next) => {
 router.post("/rejectSuggestion", (request, response, next) => {
   const { title, suggestedBy, comment } = request.body;
 
-  console.log(title, suggestedBy, comment);
-
   SuggestedBook.deleteOne({
     title: title,
     suggestedBy: suggestedBy,
@@ -416,7 +392,7 @@ router.post("/rejectSuggestion", (request, response, next) => {
       response.send("removed");
     })
     .catch((error) => {
-      console.log("Error at removing suggested book: ", error);
+      console.log("backend: Error at removing suggested book: ", error);
       next();
     });
 });
@@ -424,8 +400,6 @@ router.post("/rejectSuggestion", (request, response, next) => {
 router.post("/acceptSuggestion", (request, response, next) => {
   const { title, suggestedBy, comment } = request.body;
   const listName = "Special";
-
-  console.log("backend start: ", title, suggestedBy, comment);
 
   List.findOne({ name: listName, owner: request.user._id }).then((exists) => {
     if (exists != null) {
@@ -478,7 +452,10 @@ router.post("/acceptSuggestion", (request, response, next) => {
                       },
                       { $push: { comments: sBook.comment } }
                     ).then((spBookUpdated) => {
-                      console.log("specialBook updated: ", spBookUpdated);
+                      console.log(
+                        "backend: specialBook updated: ",
+                        spBookUpdated
+                      );
                       List.updateOne(
                         { name: listName, owner: request.user._id },
                         { $push: { special: spBookCreated } }
@@ -499,7 +476,10 @@ router.post("/acceptSuggestion", (request, response, next) => {
                       title: title,
                       suggestedBy: suggestedBy,
                     }).then((sBookDeleted) => {
-                      console.log("suggestedBook deleted: ", sBookDeleted);
+                      console.log(
+                        "backend: suggestedBook deleted: ",
+                        sBookDeleted
+                      );
                     });
                     //response.send("done");
                   })
@@ -534,14 +514,14 @@ router.post("/acceptSuggestion", (request, response, next) => {
             comment: comment,
           })
             .then((sBook) => {
-              console.log("found suggested book: ", sBook);
+              console.log("backend: found suggested book: ", sBook);
               SpecialBook.findOne({
                 title: sBook.title,
                 suggestedBy: sBook.suggestedBy,
               })
                 .then((spBookExists) => {
                   if (spBookExists != null) {
-                    console.log("specialBook exists: ", spBookExists);
+                    console.log("backend: specialBook exists: ", spBookExists);
                     List.updateOne(
                       { name: listName, owner: request.user._id },
                       { $push: { special: spBookExists } }
@@ -569,7 +549,7 @@ router.post("/acceptSuggestion", (request, response, next) => {
                     })
                       .then((spBookCreated) => {
                         console.log(
-                          "special book created here: ",
+                          "backend: special book created here: ",
                           spBookCreated
                         ); // ??
                         SpecialBook.updateOne(
@@ -581,7 +561,7 @@ router.post("/acceptSuggestion", (request, response, next) => {
                         )
                           .then((spBookUpdated) => {
                             console.log(
-                              "specialBook updated here: ",
+                              "backend: specialBook updated here: ",
                               spBookUpdated
                             );
 
@@ -621,7 +601,7 @@ router.post("/acceptSuggestion", (request, response, next) => {
                         })
                           .then((sBookDeleted) => {
                             console.log(
-                              "suggestedBook deleted: ",
+                              "backend: suggestedBook deleted: ",
                               sBookDeleted
                             );
                             //response.send("done");

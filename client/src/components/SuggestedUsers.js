@@ -18,7 +18,6 @@ class SuggestedUsers extends Component {
   };
 
   render() {
-    // console.log("Suggested Users", this.props.user);
     return (
       <div className="follower-section">
         <div className="follower-section-header">Follow</div>

@@ -3,7 +3,6 @@ import "../components/FollowerCard.css";
 
 class FollowerCard extends Component {
   onClickRemoveFollower = (event) => {
-    console.log(event.target.getAttribute("follower"));
     this.props.onClickRemoveFollower(event.target.getAttribute("follower"));
   };
 

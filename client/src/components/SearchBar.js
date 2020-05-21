@@ -11,7 +11,6 @@ class SearchBar extends Component {
   };
 
   inputClick = () => {
-    //const isbn = this.state.searchQuery;
     const query = this.state.searchQuery.replace(/\s/g, "+");
 
     //reset result list in LoggedIn.js:
@@ -35,7 +34,6 @@ class SearchBar extends Component {
         });
       // check for text input:
     } else {
-      //console.log(query);
       axios
         .get(`https://openlibrary.org/search.json?title=${query}`)
         .then((booksJSON) => {
@@ -49,13 +47,11 @@ class SearchBar extends Component {
             console.log("Cannot find books");
           } else {
             for (let isbn of onlyFiveISBN) {
-              //console.log(isbn);
               axios
                 .get(
                   `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
                 )
                 .then((bookJSON) => {
-                  //console.log(bookJSON.data);
                   this.props.updateSearchResults(bookJSON, isbn);
                 })
                 .catch((error) => {
