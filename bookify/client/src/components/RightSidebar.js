@@ -16,7 +16,6 @@ class RightSidebar extends Component {
         </div>
         <div className="right-section">Newest books</div>
         <div className="right-section">
-          Follow
           <SuggestedUsers user={this.props.user} setUser={this.props.setUser} />
         </div>
       </div>
