@@ -12,6 +12,7 @@ class LoggedIn extends Component {
     lists: [],
     suggestedList: [],
     randomList: [],
+    user: this.props.user,
   };
 
   componentDidMount = () => {
@@ -20,6 +21,16 @@ class LoggedIn extends Component {
     this.getListsFromDb();
     this.getSuggestedBooksFromDb();
     this.getRandomList();
+  };
+
+  componentWillReceiveProps = (nextProps) => {
+    console.log(nextProps.user, this.props.user);
+    if (
+      JSON.stringify(nextProps.user.following) !==
+      JSON.stringify(this.props.user)
+    ) {
+      this.booksFromFollowersList();
+    }
   };
 
   refreshRandomList = (bookTitle) => {
