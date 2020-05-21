@@ -6,6 +6,18 @@ const passport = require("passport");
 
 router.post("/signup", (req, res) => {
   const { username, password } = req.body;
+  console.log("signup in backend now with: ", username);
+
+  const avatarDummy = [
+    "/images/summer.png",
+    "/images/morty.jpeg",
+    "/images/meeseek.jpg",
+    "/images/birdperson.png",
+    "/images/pickle.jpg",
+  ];
+  const randomAvatar =
+    avatarDummy[Math.floor(Math.random() * avatarDummy.length)];
+  console.log("your avatar: ", randomAvatar);
 
   if (!username) {
     return res.status(400).json({ message: "Your username cannot be empty" });
@@ -27,18 +39,20 @@ router.post("/signup", (req, res) => {
       const salt = bcrypt.genSaltSync();
       const hash = bcrypt.hashSync(password, salt);
 
-      return User.create({ username: username, password: hash }).then(
-        (dbUser) => {
-          req.login(dbUser, (err) => {
-            if (err) {
-              return res
-                .status(500)
-                .json({ message: "Error while attempting to login" });
-            }
-            res.json(dbUser);
-          });
-        }
-      );
+      return User.create({
+        username: username,
+        password: hash,
+        avatar: randomAvatar,
+      }).then((dbUser) => {
+        req.login(dbUser, (err) => {
+          if (err) {
+            return res
+              .status(500)
+              .json({ message: "Error while attempting to login" });
+          }
+          res.json(dbUser);
+        });
+      });
     })
     .catch((err) => {
       res.json(err);
