@@ -18,7 +18,7 @@ class SearchBar extends Component {
     this.props.updateSearchResults("", "reset");
 
     // check for ISBN-13 format
-    if (query.length === 13) {
+    if (query.length === 13 && query.charAt(0) === "9") {
       //console.log("isbn: ", query);
       let isbn = query;
 
@@ -45,22 +45,23 @@ class SearchBar extends Component {
               book.isbn.find((number) => number.toString().length === 13)
             );
 
-          //let onlyFiveBookJSONs = [];
-          //console.log(onlyFiveISBN);
-
-          for (let isbn of onlyFiveISBN) {
-            //console.log(isbn);
-            axios
-              .get(
-                `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
-              )
-              .then((bookJSON) => {
-                //console.log(bookJSON.data);
-                this.props.updateSearchResults(bookJSON, isbn);
-              })
-              .catch((error) => {
-                console.log("Error calling axios at inputClick: ", error);
-              });
+          if (onlyFiveISBN.length === 0) {
+            console.log("Cannot find books");
+          } else {
+            for (let isbn of onlyFiveISBN) {
+              //console.log(isbn);
+              axios
+                .get(
+                  `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
+                )
+                .then((bookJSON) => {
+                  //console.log(bookJSON.data);
+                  this.props.updateSearchResults(bookJSON, isbn);
+                })
+                .catch((error) => {
+                  console.log("Error calling axios at inputClick: ", error);
+                });
+            }
           }
         })
         .catch((error) => {

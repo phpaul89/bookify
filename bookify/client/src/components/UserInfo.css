@@ -25,4 +25,13 @@
 .user-joined {
   font-size: 0.8em;
   margin: 2% 0 2% 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.user-following p {
+  font-weight: bold;
+  margin: 0 0 0 5px;
+  padding: 0;
+  cursor: pointer;
 }

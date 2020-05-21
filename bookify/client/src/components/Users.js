@@ -40,9 +40,7 @@ class Users extends Component {
     const usersList = filterUsers.map((user) => {
       // console.log("User list:", user);
       return (
-        <div key={user._id}>
-          {user.username.charAt(0).toUpperCase() +
-            user.username.slice(1).toLowerCase()}
+        <div key={user._id} className="follower-group">
           <div className="add-follower-div-img">
             <img
               src="/images/plus-icon.png"
@@ -51,6 +49,8 @@ class Users extends Component {
               onClick={() => this.followUser(user._id)}
             />
           </div>
+          {user.username.charAt(0).toUpperCase() +
+            user.username.slice(1).toLowerCase()}
         </div>
       );
     });

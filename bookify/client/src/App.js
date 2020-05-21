@@ -36,7 +36,7 @@ class App extends Component {
           exact
           path="/"
           render={(props) => {
-            return this.state.user !== null ? (
+            return this.state.user ? (
               <LoggedIn user={this.state.user} setUser={this.setUser} />
             ) : (
               <div>Please login</div>

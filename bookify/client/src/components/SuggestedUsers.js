@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Users from "./Users";
+import "../components/SuggestedUsers.css";
 
 class SuggestedUsers extends Component {
   state = {
@@ -19,9 +20,9 @@ class SuggestedUsers extends Component {
   render() {
     // console.log("Suggested Users", this.props.user);
     return (
-      <div>
-        Follow
-        <div>
+      <div className="follower-section">
+        <div className="follower-section-header">Follow</div>
+        <div className="follower-section-input">
           <input
             type="text"
             name="follow"

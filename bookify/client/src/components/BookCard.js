@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../components/BookCard.css";
+import axios from "axios";
 
 class BookCard extends Component {
   state = {
@@ -10,10 +11,14 @@ class BookCard extends Component {
   };
 
   onClickAdd = () => {
-    this.setState({
-      activeAdd: !this.state.activeAdd,
-      activeShare: false,
-    });
+    if (this.props.lists.length !== 0) {
+      this.setState({
+        activeAdd: !this.state.activeAdd,
+        activeShare: false,
+      });
+    } else {
+      console.log("Create a list first");
+    }
   };
 
   onClickSave = (event) => {
@@ -23,10 +28,18 @@ class BookCard extends Component {
 
   onClickShare = (event) => {
     console.log(this.props.book);
-    this.setState({
-      activeShare: !this.state.activeShare,
-      activeAdd: false,
-    });
+
+    axios
+      .post("/saveBookWhenClickShare", { book: this.props.book })
+      .then((response) => {
+        this.setState({
+          activeShare: !this.state.activeShare,
+          activeAdd: false,
+        });
+      })
+      .catch((error) => {
+        console.log("frontend: error at saveBookWhenClickShare: ", error);
+      });
   };
 
   onCommentInputChange = (event) => {
@@ -41,6 +54,7 @@ class BookCard extends Component {
 
   onClickSend = () => {
     console.log(this.state.comment, this.state.friend, this.props.book.title);
+
     this.props.onClickShareBook(
       this.state.comment,
       this.state.friend,
@@ -53,16 +67,20 @@ class BookCard extends Component {
 
   render() {
     const userLists = this.props.lists.map((list) => {
-      return (
-        <button
-          type="button"
-          className="addToListButton"
-          key={list.name}
-          onClick={this.onClickSave}
-        >
-          {list.name}
-        </button>
-      );
+      if (list.name === "Special") {
+        return null;
+      } else {
+        return (
+          <button
+            type="button"
+            className="addToListButton"
+            key={list.name}
+            onClick={this.onClickSave}
+          >
+            {list.name}
+          </button>
+        );
+      }
     });
 
     return (

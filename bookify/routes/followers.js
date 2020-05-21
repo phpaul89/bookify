@@ -66,4 +66,43 @@ router.get("/followers/getbooks", (req, res) => {
   });
 });
 
+router.post("/getFollowers", (request, response, next) => {
+  User.findById(request.user._id)
+    .populate("following")
+    .then((loggedInUser) => {
+      console.log("here: ", loggedInUser.following);
+      const allFollowersFromDb = loggedInUser.following.map((follower) => {
+        return { username: follower.username, avatar: follower.avatar };
+      });
+
+      console.log(allFollowersFromDb);
+      response.send(allFollowersFromDb);
+    });
+});
+
+router.post("/removeFollower", (request, response, next) => {
+  const follower = request.body.name;
+
+  User.findOne({ username: follower })
+    .then((follower) => {
+      console.log("follower: ", follower);
+      User.updateOne(
+        { _id: request.user._id },
+        { $pull: { following: follower._id } }
+      )
+        .then((success) => {
+          console.log("success?: ", success);
+          response.send("success");
+        })
+        .catch((error) => {
+          console.log("Error at updating follower array: ", error);
+          next();
+        });
+    })
+    .catch((error) => {
+      console.log("Error at finding follower: ", error);
+      next();
+    });
+});
+
 module.exports = router;

@@ -8,9 +8,13 @@ class LeftSidebar extends Component {
     return (
       <div className="left-sidebar">
         <div className="left-section-user-panel">
-          <UserInfo user={this.props.user} />
+          <UserInfo
+            user={this.props.user}
+            onClickFollowing={this.props.onClickFollowing}
+          />
         </div>
         <div className="left-section-list">
+          <div className="left-section-list-header">Your lists</div>
           <UserList
             lists={this.props.lists}
             onClickListItem={this.props.onClickListItem}
