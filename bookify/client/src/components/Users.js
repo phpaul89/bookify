@@ -30,12 +30,14 @@ class Users extends Component {
 
   render() {
     //console.log(this.state.loggedIn, this.props.user);
-    const filterUsers = this.state.users.filter((user) => {
-      return (
-        !this.state.loggedIn.following.includes(user._id) &&
-        user.username.toLowerCase().includes(this.props.query.toLowerCase())
-      );
-    });
+    const filterUsers = this.state.users
+      .filter((user) => {
+        return (
+          !this.state.loggedIn.following.includes(user._id) &&
+          user.username.toLowerCase().includes(this.props.query.toLowerCase())
+        );
+      })
+      .slice(0, 5);
 
     const usersList = filterUsers.map((user) => {
       // console.log("User list:", user);

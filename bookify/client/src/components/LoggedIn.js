@@ -22,6 +22,16 @@ class LoggedIn extends Component {
     this.getRandomList();
   };
 
+  componentWillReceiveProps = (nextProps) => {
+    console.log(nextProps.user, this.props.user);
+    if (
+      JSON.stringify(nextProps.user.following) !==
+      JSON.stringify(this.props.user)
+    ) {
+      this.booksFromFollowersList();
+    }
+  };
+
   refreshRandomList = (bookTitle) => {
     this.setState({
       randomList: [...this.state.randomList].filter(
@@ -351,7 +361,7 @@ class LoggedIn extends Component {
 
   render() {
     return (
-      <div className="app">
+      <div className="loggedin-main-div">
         <div className="main-wrapper">
           <LeftSidebar
             lists={this.state.lists}

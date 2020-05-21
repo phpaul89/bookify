@@ -5,7 +5,7 @@ import FollowerCard from "../components/FollowerCard.js";
 
 class SearchResults extends Component {
   render() {
-    //console.log(this.props.searchResults);
+    console.log(this.props.searchResults);
     const searchResultsList = this.props.searchResults.map((book) => {
       if (book.avatar === undefined) {
         return (
