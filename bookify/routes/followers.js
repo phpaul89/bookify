@@ -35,7 +35,7 @@ router.get("/users", (req, res) => {
 
 router.get("/followers/getbooks", (req, res) => {
   User.findById(req.user._id).then((loggedInUser) => {
-    console.log(loggedInUser.following);
+    // console.log(loggedInUser.following);
     const idFollower = loggedInUser.following.map(
       (followerId) =>
         new Promise((resolve, reject) =>
@@ -43,7 +43,7 @@ router.get("/followers/getbooks", (req, res) => {
         )
     );
     Promise.all(idFollower).then((allListModels) => {
-      console.log("Books:", allListModels);
+      //   console.log("Books:", allListModels);
       const books = [];
       allListModels.map((userListModels) => {
         return userListModels.map((oneListModel) => {
@@ -52,14 +52,14 @@ router.get("/followers/getbooks", (req, res) => {
           });
         });
       });
-      console.log(books);
+      //   console.log(books);
       const bookPromise = books.map((bookId) => {
         return new Promise((resolve, reject) => {
           return resolve(Book.findById(bookId));
         });
       });
       Promise.all(bookPromise).then((listOfBooks) => {
-        console.log("Book", listOfBooks);
+        // console.log("Book", listOfBooks);
         res.send({ booksFromFollowers: listOfBooks });
       });
     });
