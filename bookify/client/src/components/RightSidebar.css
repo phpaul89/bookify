@@ -12,6 +12,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 19vh;
 }
 
 .random-section {
@@ -25,4 +26,16 @@
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+}
+
+.follow-title {
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 0.2em;
+  box-shadow: 0 4px 8px -3px lightgray;
+  margin-bottom: 5%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 26vh;
 }
