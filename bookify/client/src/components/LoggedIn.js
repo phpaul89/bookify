@@ -12,7 +12,6 @@ class LoggedIn extends Component {
     lists: [],
     suggestedList: [],
     randomList: [],
-    user: this.props.user,
   };
 
   componentDidMount = () => {
