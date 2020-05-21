@@ -37,7 +37,7 @@ class SearchBar extends Component {
     } else {
       //console.log(query);
       axios
-        .get(`http://openlibrary.org/search.json?title=${query}`)
+        .get(`https://openlibrary.org/search.json?title=${query}`)
         .then((booksJSON) => {
           const onlyFiveISBN = booksJSON.data.docs
             .slice(0, 3)
