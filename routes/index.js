@@ -29,14 +29,9 @@ router.delete("/dashboard/deletebooks/:title", (request, response) => {
 
 router.post("/saveBookWhenClickShare", (request, response, next) => {
   // destructuring: if variables is not passed by API -> initialized with 'undefined'
-  const {
-    isbn,
-    title,
-    cover,
-    by_statement,
-    publish_date,
-    url,
-  } = request.body.book;
+  const { isbn, title, cover, by, year, url } = request.body.book;
+
+  //console.log("backend: book object: ", request.body.book);
 
   // Step 1 of 2: Check by book title if Book is already existing in database, if not -> create Book:
   Book.findOne({ title: title })
@@ -48,8 +43,8 @@ router.post("/saveBookWhenClickShare", (request, response, next) => {
         Book.create({
           isbn: isbn,
           title: title,
-          by: by_statement,
-          year: publish_date,
+          by: by,
+          year: year,
           cover: cover,
           url: url,
         })
@@ -72,14 +67,10 @@ router.post("/saveBookWhenClickShare", (request, response, next) => {
 
 router.post("/dashboard/saveToList", (request, response, next) => {
   // destructuring: if variables is not passed by API -> initialized with 'undefined'
-  const {
-    isbn,
-    title,
-    cover,
-    by_statement,
-    publish_date,
-    url,
-  } = request.body.book;
+  const { isbn, title, cover, by, year, url } = request.body.book;
+
+  console.log("backend: book object: ", request.body.book);
+
   const listName = request.body.list;
 
   // Step 1 of 2: Check by book title if Book is already existing in database, if not -> create Book:
@@ -92,8 +83,8 @@ router.post("/dashboard/saveToList", (request, response, next) => {
         Book.create({
           isbn: isbn,
           title: title,
-          by: by_statement,
-          year: publish_date,
+          by: by,
+          year: year,
           cover: cover,
           url: url,
         })

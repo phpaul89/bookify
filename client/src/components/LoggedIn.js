@@ -124,6 +124,11 @@ class LoggedIn extends Component {
     if (isbn === "reset") {
       this.setState({ searchResults: [] });
     } else {
+      console.log("bookJSON from updateSearchResults: ", bookJSON);
+      console.log("author: ", bookJSON.data[`ISBN:${isbn}`]["by_statement"]);
+      console.log("author: ", bookJSON.data[`ISBN:${isbn}`].by_statement);
+      console.log("year: ", bookJSON.data[`ISBN:${isbn}`]["publish_date"]);
+      console.log("year: ", bookJSON.data[`ISBN:${isbn}`].publish_date);
       let coverCheck = { medium: "" };
 
       if (bookJSON.data[`ISBN:${isbn}`].cover !== undefined) {

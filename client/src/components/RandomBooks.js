@@ -17,6 +17,7 @@ class RandomBooks extends Component {
         `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
       )
       .then((bookJSON) => {
+        console.log("axios call from RandomBooks: ", bookJSON);
         this.props.updateSearchResults(bookJSON, isbn);
         this.props.refreshRandomList(bookJSON.data[`ISBN:${isbn}`].title);
       })

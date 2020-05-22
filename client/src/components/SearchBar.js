@@ -27,6 +27,7 @@ class SearchBar extends Component {
           `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
         )
         .then((bookJSON) => {
+          console.log("axios call from SearchBar: ", bookJSON);
           this.props.updateSearchResults(bookJSON, isbn);
         })
         .catch((error) => {
@@ -52,6 +53,7 @@ class SearchBar extends Component {
                   `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
                 )
                 .then((bookJSON) => {
+                  console.log("axios call from SearchBar: ", bookJSON);
                   this.props.updateSearchResults(bookJSON, isbn);
                 })
                 .catch((error) => {

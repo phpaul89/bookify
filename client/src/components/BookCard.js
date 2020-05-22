@@ -26,6 +26,7 @@ class BookCard extends Component {
   };
 
   onClickShare = () => {
+    console.log("book details: ", this.props.book);
     axios
       .post("/saveBookWhenClickShare", { book: this.props.book })
       .then((response) => {
