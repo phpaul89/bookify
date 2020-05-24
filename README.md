@@ -13,8 +13,8 @@ Day 7: Styling and cleaning of code
 
 The app concept is a social media platform for reading enthusiasts and enables them to efficiently store and share books with the utilization of the Open Library API as the data source.
 
-![Overview page](https://github.com/phpaul89/bookify/blob/master/public/preview_1.png)
-![Personal touch](https://github.com/phpaul89/bookify/blob/master/public/preview_2.png)
+![Overview page](https://github.com/phpaul89/bookify/blob/master/public/preview_1.PNG)
+![Personal touch](https://github.com/phpaul89/bookify/blob/master/public/preview_2.PNG)
 
 # Quick start
 
